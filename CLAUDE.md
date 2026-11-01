@@ -6,8 +6,13 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 - Repository content (notebooks, code comments, markdown, plot titles, README): **English**. The README also has a short Korean summary.
 - Chat replies to the user: **Spanish**, concise.
 
+## Dataset facts
+- Kaggle "Air Pollution in Seoul" (bappekim): hourly readings, 25 stations (one per district), 6 pollutants, 2017-01-01 to 2019-12-31. No weather variables.
+- `Measurement_info.csv` is the source used: it has the instrument status (only 0 = normal is valid). `Measurement_summary.csv` has no status and keeps instrument errors (PM2.5 above 500 ug/m3); do not use it for analysis.
+- Units: PM10 and PM2.5 in ug/m3; SO2, NO2, CO and O3 in ppm.
+
 ## Layout
-- `notebooks/00`-`07`: the analysis, run in order. Each one reads `data/processed` written by an earlier one.
+- `notebooks/00`-`06`: the analysis, run in order. Notebook 01 writes `data/processed`, which the later notebooks read.
 - `src/seoul_air/`: reusable code (loading, cleaning, grades, features, models). Notebooks import from here instead of copying code.
 - `tests/`: pytest for everything in `src/`.
 - `reports/figures`, `reports/metrics`: outputs written by the notebooks.
@@ -20,6 +25,6 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 4. **Statistics**: pollutant concentrations are right-skewed; report medians and percentiles, not only means.
 5. **Time**: timestamps are KST (`Asia/Seoul`). Some sources publish hour 24 for midnight; convert it explicitly.
 6. **Modeling**: strict temporal split (never random); no feature may use information from after the prediction time; always compare to a persistence baseline.
-7. **Causality**: the policy notebook estimates an association adjusted for weather, not a proven causal effect. Say so.
+7. **Causality**: describe associations (seasons, pollutants, districts); do not claim causes the data cannot show.
 8. **Order**: an "Interpretation" markdown goes after the code cell it interprets. Neutral analytical voice, no second person.
 9. **Safety**: never edit `data/raw`. No personal paths (`C:\Users\...`) in notebooks. Do not commit or push unless explicitly asked. API keys only in `.env`.

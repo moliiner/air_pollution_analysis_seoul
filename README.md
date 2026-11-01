@@ -1,14 +1,18 @@
 # Seoul Air Quality: When and Where Is the Air Most Harmful?
 
-> **Status: work in progress.** The sections marked _TBD_ are filled in as each phase of [docs/ANALYSIS_PLAN.md](docs/ANALYSIS_PLAN.md) is completed.
+End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, SO2) from the 25 district stations of Seoul, 2017-2019: status-based data cleaning, temporal and spatial EDA, pollution episodes, and a next-day PM2.5 forecast evaluated against a persistence baseline on a held-out year.
 
-End-to-end data analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 districts of Seoul: data cleaning, temporal and spatial EDA, weather drivers, a weather-adjusted look at the PM seasonal management system, and a next-day PM2.5 forecast compared against a persistence baseline.
+> **Status:** notebooks 00-05 are complete; the non-technical summary (notebook 06) is in progress.
 
 ## Key results
 
-_TBD: 3-5 bullet points with real numbers from the notebooks, and one headline figure._
+- **Season matters far more than place.** The median daily PM2.5 peaks in March (34.4 ug/m3) and is lowest in September (10.7). In March 48.1% of station-days are graded Bad or Very bad, against 0.4% in August.
+- **PM2.5 is a city-wide phenomenon.** Daily PM2.5 correlates at 0.90 or more between any two districts; the date explains 94.3% of the station-day variance and the district only 0.6%. The district ranking changes from year to year (Spearman 0.12-0.22 between years).
+- **No improvement over 2017-2019.** The mean station-day PM2.5 was 24.6, 22.8 and 24.9 ug/m3, above the Korean annual standard (15) every year; 48 multi-day Bad episodes were found, almost all in winter and spring.
+- **Next-day forecast.** A Ridge model selected on 2018 validation folds cuts the 2019 MAE by 10.0% against "tomorrow = today" (7.97 vs 8.86 ug/m3). It raises fewer false alarms (precision on Bad days 0.70 vs 0.62) but misses more Bad days (recall 0.54 vs 0.61): useful for the level, not yet for alerts.
+- **Data quality.** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file are such instrument errors.
 
-<!-- ![Headline figure](reports/figures/xx_headline.png) -->
+![Daily PM2.5 and PM10](reports/figures/02_daily_series.png)
 
 ## Business question
 
@@ -16,28 +20,39 @@ When and where is Seoul's air most harmful, what drives it, and can tomorrow's P
 
 ## Data
 
-_TBD: sources, dataset IDs, period, size and terms of use. See [data/README.md](data/README.md)._
+- **Source:** Kaggle, *Air Pollution in Seoul* (`bappekim/air-pollution-in-seoul`), <https://www.kaggle.com/datasets/bappekim/air-pollution-in-seoul>; according to its description the data comes from the Seoul Metropolitan Government. Check the terms of use on the Kaggle page before reusing it.
+- **Content:** 3,885,066 hourly readings (25 stations x 6 pollutants, 2017-01-01 to 2019-12-31) with an instrument status code.
+- The raw files are not committed; `notebooks/00_data_acquisition.ipynb` downloads them. See [data/README.md](data/README.md).
 
 ## Methodology
 
-1. **Cleaning** ([01](notebooks/01_data_cleaning.ipynb)): tidy hourly table, documented row drops, Korean PM grades.
-2. **Temporal EDA** ([02](notebooks/02_eda_temporal.ipynb)): trend, seasonality, weekly and daily cycles.
-3. **Spatial EDA** ([03](notebooks/03_eda_spatial.ipynb)): district ranking and map.
-4. **Weather and episodes** ([04](notebooks/04_weather_and_episodes.ipynb)): wind, rain and high-pollution episodes.
-5. **Policy impact** ([05](notebooks/05_policy_impact.ipynb)): weather-adjusted comparison of winters before and after December 2019.
-6. **Forecasting** ([06](notebooks/06_forecasting.ipynb)): strict temporal split, persistence baseline, linear and boosting models.
-7. **Summary** ([07](notebooks/07_insights_summary.ipynb)): findings, recommendations and limitations.
+| Notebook | Content |
+|---|---|
+| [00 Data acquisition](notebooks/00_data_acquisition.ipynb) | Download and file inventory |
+| [01 Data cleaning](notebooks/01_data_cleaning.ipynb) | Instrument-status filter, complete hourly grid, daily means (18 of 24 hours), Korean PM grades |
+| [02 Temporal EDA](notebooks/02_eda_temporal.ipynb) | Annual level vs Korean and WHO references, seasonality, weekday and hourly cycles |
+| [03 Spatial EDA](notebooks/03_eda_spatial.ipynb) | District ranking, station map, rank stability, variance decomposition |
+| [04 Pollutants and episodes](notebooks/04_pollutants_and_episodes.ipynb) | Pollutant correlations, PM vs ozone seasons, multi-day episodes, coarse-dust days |
+| [05 Forecasting](notebooks/05_forecasting.ipynb) | Next-day PM2.5 per district: baselines, Ridge, gradient boosting |
+| [06 Insights summary](notebooks/06_insights_summary.ipynb) | Findings for a non-technical reader (in progress) |
+
+**Forecast protocol.** One row per district and issue day; target = next-day mean PM2.5. Features use only data available at the end of the issue day (pollutants of the day, PM2.5 lags, 7-day mean, city-wide mean and its change, season, station). Fit on 2017-2018, settings tuned on three expanding-window folds inside 2018, model chosen on validation MAE, and 2019 used once as the test year. Metrics: MAE, RMSE, bias, Korean grade accuracy and precision / recall of Bad-or-worse days.
+
+## Limitations
+
+- No weather data (wind, rain, humidity); it is the main missing driver of day-to-day changes.
+- Three years only: too short to separate a trend from weather variation, and the seasonal management system introduced in December 2019 cannot be evaluated.
+- One station per district; some district-months are largely missing (for example Gwanak-gu, September 2019).
 
 ## Project structure
 
 ```
 ├── data/                 # raw/ (never edited), external/, processed/  (not committed)
-├── notebooks/            # 00-07, run in order
-├── src/seoul_air/        # reusable code: config, loading, cleaning, PM grades
+├── notebooks/            # 00-06, run in order
+├── src/seoul_air/        # config, loading and cleaning, PM grades, forecast features, metrics
 ├── tests/                # pytest for src/
 ├── reports/              # figures/ and metrics/ written by the notebooks
 ├── docs/ANALYSIS_PLAN.md # roadmap and checklists
-├── app/                  # optional Streamlit dashboard
 ├── Makefile              # install, test, lint, notebooks
 └── requirements.txt
 ```
@@ -47,20 +62,15 @@ _TBD: sources, dataset IDs, period, size and terms of use. See [data/README.md](
 ```bash
 python -m venv .venv
 .venv\Scripts\activate          # Windows  (source .venv/bin/activate on macOS/Linux)
-make install                    # or: pip install -r requirements.txt
-cp .env.example .env            # add API keys
-make test
-make notebooks                  # runs 00-07 in order
+pip install -r requirements.txt
+pytest -q
+make notebooks                  # runs 00-06 in order; 00 downloads the data
 ```
-
-## Limitations
-
-_TBD._
 
 ## 한국어 요약
 
-_TBD: 서울시 25개 자치구의 미세먼지(PM10)와 초미세먼지(PM2.5) 데이터를 분석하여, 언제 어디에서 대기질이 가장 나쁜지, 기상 요인의 영향, 미세먼지 계절관리제 전후 비교, 그리고 다음 날 PM2.5 예측 모델을 다룹니다. 주요 결과는 분석 완료 후 작성합니다._
+서울시 25개 자치구 측정소의 2017~2019년 시간별 대기오염 데이터(PM2.5, PM10, O3, NO2, CO, SO2)를 분석한 프로젝트입니다. 측정기 상태 코드를 이용해 이상값을 제거하고, 계절·요일·시간대별 패턴, 자치구 간 차이, 고농도 에피소드를 분석했습니다. 초미세먼지(PM2.5)는 3월에 가장 높고 9월에 가장 낮으며, 자치구 간 차이보다 날짜(계절·기상)에 따른 변동이 훨씬 큽니다. 다음 날 PM2.5 예측 모델(Ridge)은 2019년 테스트에서 "내일 = 오늘" 기준 모델보다 평균 절대 오차(MAE)를 10.0% 줄였습니다.
 
 ## Tech stack
 
-Python, pandas, NumPy, scikit-learn, statsmodels, Matplotlib, seaborn, pytest, GitHub Actions.
+Python, pandas, NumPy, scikit-learn, Matplotlib, seaborn, pytest, GitHub Actions.
