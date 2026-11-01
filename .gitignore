@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data: raw downloads are large and must be re-downloaded (see data/README.md)
+data/raw/*
+data/external/*
+data/processed/*
+!data/**/.gitkeep
+
+# Secrets (API keys for data.go.kr / AirKorea / KMA)
+.env
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

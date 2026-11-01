@@ -1,0 +1,18 @@
+# Lower bounds are the versions the code needs; upper caps stop a new major release from breaking the project.
+pandas>=2.0,<4
+numpy>=1.26,<3
+scipy>=1.11,<2
+scikit-learn>=1.4,<2
+statsmodels>=0.14,<1
+pyarrow>=15.0,<30
+matplotlib>=3.8,<4
+seaborn>=0.13,<1
+requests>=2.31,<3
+python-dotenv>=1.0,<2
+jupyter>=1.0,<2
+nbconvert>=7.16,<8
+nbformat>=5.10,<6
+pytest>=8.0,<9   # pytest 9 fails internally on Python 3.10
+pyflakes>=3.0,<5
+# geopandas>=0.14,<2   # optional, only for the district choropleth maps
+# streamlit>=1.40,<2   # optional, only for app/streamlit_app.py
