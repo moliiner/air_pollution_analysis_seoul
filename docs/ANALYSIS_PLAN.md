@@ -4,7 +4,7 @@ Roadmap for the project, in the order the work should be done. Each phase ends w
 
 ## Business question
 
-> **When and where is Seoul's air most harmful, what drives it, and can tomorrow's PM2.5 level be predicted well enough to warn residents?**
+> **When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be predicted well enough to warn residents?**
 
 Dataset: Kaggle *Air Pollution in Seoul*, hourly, 25 district stations, 2017-2019 (see `data/README.md`).
 
