@@ -12,7 +12,7 @@ Dataset: Kaggle *Air Pollution in Seoul*, hourly, 25 district stations, 2017-201
 |---|---|---|---|
 | 1 | Is the data complete and trustworthy? | `01_data_cleaning` | Done |
 | 2 | How do PM2.5 / PM10 vary by year, season, weekday and hour? | `02_eda_temporal` | Done |
-| 3 | Which districts are most exposed, and is that stable? | `03_eda_spatial` | Done |
+| 3 | Can districts be ranked, or do differences depend on the stations? | `03_eda_spatial` | Done |
 | 4 | How do pollutants relate, and when do episodes happen? | `04_pollutants_and_episodes` | Done |
 | 5 | Can next-day PM2.5 be forecast better than "same as today"? | `05_forecasting` | Done (first version) |
 | 6 | What should a citizen or the city take away? | `06_insights_summary` | To do |
@@ -43,7 +43,9 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 
 - [x] Annual level against Korean and WHO references
 - [x] Seasonality, weekday and hourly cycles
-- [x] District ranking, stability across years, variance decomposition
+- [x] Variance decomposition, station offsets over time, official station history, level shifts
+- [x] Replace the district ranking with a comparison of stations with intervals
+- [ ] Ask the Seoul Research Institute of Public Health and Environment for month-level maintenance records
 - [x] Pollutant correlations, episodes, coarse-dust days
 - [ ] Optional: choropleth map with district boundaries (GeoJSON in `data/external`, `geopandas`)
 

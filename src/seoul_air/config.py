@@ -5,6 +5,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA_RAW = ROOT / "data" / "raw"
 DATA_EXTERNAL = ROOT / "data" / "external"
 DATA_PROCESSED = ROOT / "data" / "processed"
+STATION_HISTORY = ROOT / "data" / "reference" / "station_history.csv"
 FIGURES = ROOT / "reports" / "figures"
 METRICS = ROOT / "reports" / "metrics"
 

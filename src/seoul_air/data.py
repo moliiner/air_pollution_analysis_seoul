@@ -13,6 +13,7 @@ from seoul_air.config import (
     KAGGLE_URL,
     MIN_HOURS_PER_DAY,
     RAW_FILES,
+    STATION_HISTORY,
     STATUS_NORMAL,
 )
 
@@ -54,6 +55,11 @@ def load_stations():
         "Latitude": "latitude",
         "Longitude": "longitude",
     })
+
+
+def load_station_history():
+    """Official year of the latest equipment replacement and relocation of each station."""
+    return pd.read_csv(STATION_HISTORY, dtype={"last_relocation": "Int64"})
 
 
 def load_measurements():

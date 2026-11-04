@@ -7,6 +7,7 @@ Raw files are **not committed** (size and licence). Re-download them with `noteb
 | `raw/` | Files exactly as downloaded | Never |
 | `external/` | Reference data for later phases: weather (KMA), district boundaries (GeoJSON) | Never |
 | `processed/` | Clean tables written by notebook 01 (Parquet) | Only by code |
+| `reference/` | Small curated tables, committed to the repository | By hand, with a source |
 
 ## Source
 
@@ -33,3 +34,11 @@ Instrument status codes: 0 normal, 1 needs calibration, 2 abnormal, 4 power cut 
 |---|---|---|
 | `air_hourly.parquet` | station x hour (complete grid, NaN when missing) | `datetime`, `station_code`, `district`, 6 pollutants |
 | `air_daily.parquet` | station x day (mean when at least 18 valid hours) | `date`, `station_code`, `district`, 6 pollutants, `pm25_grade`, `pm10_grade` |
+
+## Station history
+
+`reference/station_history.csv` transcribes table 19.1 (urban network, printed pages 97-98) of the [2018 Seoul Air Quality Assessment Report](https://news.seoul.go.kr/env/files/2021/01/60112177d83700.85894331.pdf), Seoul Metropolitan Government: year of installation, of the latest equipment replacement and of the latest relocation, and the previous site. The site names are translated from Korean.
+
+- The table gives years only. It does not say which instrument was replaced, and it lists a single latest change per station.
+- Relocations in the study period: Seongdong-gu, Seodaemun-gu, Mapo-gu and Songpa-gu, all in 2018. The same report dates Mapo-gu to August 2018 and Songpa-gu to November 2018.
+- The dataset gives one location per station, the latest one, so its coordinates do not show these moves.

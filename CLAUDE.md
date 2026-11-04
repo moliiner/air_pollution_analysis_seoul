@@ -10,6 +10,7 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 - Kaggle "Air Pollution in Seoul" (bappekim): hourly readings, 25 stations (one per district), 6 pollutants, 2017-01-01 to 2019-12-31. No weather variables.
 - `Measurement_info.csv` is the source used: it has the instrument status (only 0 = normal is valid). `Measurement_summary.csv` has no status and keeps instrument errors (PM2.5 above 500 ug/m3); do not use it for analysis.
 - Units: PM10 and PM2.5 in ug/m3; SO2, NO2, CO and O3 in ppm.
+- A district value is the value of one station, and stations change: four were relocated in 2018 and most had equipment replaced in 2018-2019 (`data/reference/station_history.csv`, years only). Do not present a ranking of districts; compare stations on the same days, with intervals (notebook 03).
 - 18 days of 2019 have no valid value for any station, so 1,077 of the 1,095 days are valid: use 1,077 as the denominator of city-day shares, leave the gaps missing and do not draw lines across them (see `reports/metrics/01_network_gap_days.csv`).
 
 ## Layout
