@@ -39,9 +39,9 @@ def download_raw(force=False):
     return targets
 
 
-def load_raw(filename):
+def load_raw(filename, **read_csv_options):
     """Read a raw CSV from data/raw without changing it."""
-    return pd.read_csv(DATA_RAW / filename)
+    return pd.read_csv(DATA_RAW / filename, **read_csv_options)
 
 
 def load_stations():
@@ -58,16 +58,20 @@ def load_stations():
 
 def load_measurements():
     """Hourly readings in long format: one row per station, hour and pollutant."""
-    raw = load_raw(RAW_FILES["measurements"])
-    out = raw.rename(columns={
+    # Compact types: this table has almost 4 million rows
+    out = load_raw(
+        RAW_FILES["measurements"],
+        dtype={"Station code": "int16", "Item code": "int8", "Instrument status": "int8"},
+        parse_dates=["Measurement date"],
+        date_format="%Y-%m-%d %H:%M",
+    ).rename(columns={
         "Measurement date": "datetime",
         "Station code": "station_code",
         "Item code": "item_code",
         "Average value": "value",
         "Instrument status": "status",
     })
-    out["datetime"] = pd.to_datetime(out["datetime"], format="%Y-%m-%d %H:%M")
-    out["pollutant"] = out["item_code"].map(ITEM_CODES)
+    out["pollutant"] = out["item_code"].map(ITEM_CODES).astype("category")
     return out
 
 
@@ -87,10 +91,15 @@ def keep_valid_readings(long_df):
 
 def to_wide(long_df):
     """One row per station and hour, one column per pollutant (NaN when missing)."""
-    wide = long_df.pivot_table(index=["datetime", "station_code"],
-                               columns="pollutant", values="value", aggfunc="first")
-    wide.columns.name = None
-    return wide.reset_index()
+    keys = ["datetime", "station_code"]
+    # One outer merge per pollutant: a pivot needs far more memory on this table
+    wide = None
+    for pollutant in sorted(long_df["pollutant"].unique()):
+        column = (long_df.loc[long_df["pollutant"] == pollutant, [*keys, "value"]]
+                         .drop_duplicates(keys)
+                         .rename(columns={"value": pollutant}))
+        wide = column if wide is None else wide.merge(column, on=keys, how="outer")
+    return wide.sort_values(keys).reset_index(drop=True)
 
 
 def complete_hourly_grid(wide, start, end, stations):
@@ -108,3 +117,54 @@ def daily_means(hourly, pollutants, min_hours=MIN_HOURS_PER_DAY):
     means = grouped[pollutants].mean()
     counts = grouped[pollutants].count()
     return means.where(counts >= min_hours).reset_index()
+
+
+def network_gap_days(daily, hourly, pollutant="pm25"):
+    """Days with no valid daily mean at any station, and the hours they still have."""
+    stations = daily.groupby("date")[pollutant].count()
+    gaps = stations.index[stations == 0]
+    date = hourly["datetime"].dt.normalize()
+    on_gap = hourly.assign(date=date).loc[date.isin(gaps)].dropna(subset=[pollutant])
+    by_hour = on_gap.groupby(["date", "datetime"])[pollutant].mean()
+    out = pd.DataFrame({
+        "hours_with_data": by_hour.groupby("date").size(),
+        "partial_city_mean": by_hour.groupby("date").mean(),
+    }).reindex(gaps)
+    out["hours_with_data"] = out["hours_with_data"].fillna(0).astype(int)
+    return out.rename_axis("date").reset_index()
+
+
+def network_level(long_df):
+    """Median of the normal readings of the same hour, for one pollutant."""
+    normal = long_df[long_df["status"] == STATUS_NORMAL]
+    return long_df["datetime"].map(normal.groupby("datetime")["value"].median())
+
+
+def plausible_flagged(long_df):
+    """Flagged readings within a factor of 2 of the network level, for one pollutant.
+
+    A heuristic: these look like real air, unlike sensor faults far from the network.
+    """
+    level = network_level(long_df)
+    flagged = long_df["status"] != STATUS_NORMAL
+    return flagged & long_df["value"].between(level / 2, level * 2)
+
+
+def flag_rate_by_network_level(long_df, bins, labels):
+    """Share of flagged readings by how polluted the network was, for one pollutant.
+
+    If the status filter removed real peaks, the share would rise with the level.
+    Hours without any normal reading have no level and go to "No reference".
+    """
+    level = pd.cut(network_level(long_df), bins=bins, labels=labels)
+    level = pd.Categorical(level.astype(object).fillna("No reference"),
+                           categories=[*labels, "No reference"])
+    table = (long_df.assign(
+                 level=level,
+                 flagged=long_df["status"] != STATUS_NORMAL,
+                 plausible=plausible_flagged(long_df))
+             .groupby("level", observed=False)
+             .agg(readings=("flagged", "size"), flagged=("flagged", "sum"),
+                  plausible_flagged=("plausible", "sum")))
+    table["flagged_%"] = (100 * table["flagged"] / table["readings"]).round(2)
+    return table.rename_axis("network_level").reset_index()

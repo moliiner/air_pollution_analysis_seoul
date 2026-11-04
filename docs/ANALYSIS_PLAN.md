@@ -35,6 +35,8 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [x] Keep only normal instrument status; count every dropped reading
 - [x] Complete hourly grid; missing hours left as missing
 - [x] Daily means with the 18-of-24-hours rule; Korean PM grades
+- [x] Check that the status filter does not remove real peaks
+- [x] Document the 18 network-wide gap days and exclude them from denominators
 - [x] Save `air_hourly.parquet` and `air_daily.parquet`
 
 ## Phase 3 - EDA (`02`, `03`, `04`)

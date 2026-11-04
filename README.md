@@ -10,7 +10,7 @@ End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, 
 - **PM2.5 is a city-wide phenomenon.** Daily PM2.5 correlates at 0.90 or more between any two districts; the date explains 94.3% of the station-day variance and the district only 0.6%. The district ranking changes from year to year (Spearman 0.12-0.22 between years).
 - **No improvement over 2017-2019.** The mean station-day PM2.5 was 24.6, 22.8 and 24.9 ug/m3, above the Korean annual standard (15) every year; 48 multi-day Bad episodes were found, almost all in winter and spring.
 - **Next-day forecast.** A Ridge model selected on 2018 validation folds cuts the 2019 MAE by 10.0% against "tomorrow = today" (7.97 vs 8.86 ug/m3). It raises fewer false alarms (precision on Bad days 0.70 vs 0.62) but misses more Bad days (recall 0.54 vs 0.61): useful for the level, not yet for alerts.
-- **Data quality.** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file are such instrument errors.
+- **Data quality.** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file are such instrument errors. The filter does not hide real peaks: restoring the flagged readings that look real changes the grade of 83 of 26,247 station-days. Seoul has no daily value on 18 days of 2019, including 9 in a row after the largest episode, so the analysis uses 1,077 valid days.
 
 ![Daily PM2.5 and PM10](reports/figures/02_daily_series.png)
 
@@ -43,6 +43,7 @@ When and where is Seoul's air most harmful, what drives it, and can tomorrow's P
 - No weather data (wind, rain, humidity); it is the main missing driver of day-to-day changes.
 - Three years only: too short to separate a trend from weather variation, and the seasonal management system introduced in December 2019 cannot be evaluated.
 - One station per district; some district-months are largely missing (for example Gwanak-gu, September 2019).
+- 18 days of 2019 have no valid value for any station, among them 2019-03-09 to 2019-03-17. They are left missing, the test year covers 347 of 365 days, and a likely 3-day episode in May 2019 is split by one of these gaps.
 
 ## Project structure
 

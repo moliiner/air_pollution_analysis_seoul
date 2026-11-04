@@ -25,6 +25,8 @@ Period: 2017-01-01 00:00 to 2019-12-31 23:00 (KST), 25 stations, 6 pollutants.
 
 Instrument status codes: 0 normal, 1 needs calibration, 2 abnormal, 4 power cut off, 8 under repair, 9 abnormal data. Only status 0 is kept.
 
+**Network-wide gaps.** 18 days of 2019 have no valid daily mean at any station, for all six pollutants, so 1,077 of the 1,095 days have a city value: 2019-03-09 to 2019-03-17, 05-16, 05-18, 05-22, 07-03, 07-04, 09-07 to 09-09 and 12-01. On 10 of them the raw file has no PM2.5 rows; the other 8 have between 4 and 16 hours for the network. The list is written to `reports/metrics/01_network_gap_days.csv`.
+
 ## Processed tables
 
 | File | Grain | Columns |
