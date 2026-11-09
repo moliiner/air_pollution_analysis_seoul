@@ -2,7 +2,7 @@
 
 End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, SO2) from the 25 district stations of Seoul, 2017-2019: status-based data cleaning, temporal and spatial EDA, pollution episodes, and a next-day PM2.5 forecast evaluated against a persistence baseline on a later year.
 
-> **Status:** complete for the 2017-2019 dataset. [Notebook 06](notebooks/06_insights_summary.ipynb) summarises the findings for a non-technical reader; [docs/ANALYSIS_PLAN.md](docs/ANALYSIS_PLAN.md) lists the next steps.
+> **Status:** complete for the 2017-2019 dataset; the official 2015-2025 data is built and validated (notebook 07) for the next phase. [Notebook 06](notebooks/06_insights_summary.ipynb) summarises the findings for a non-technical reader; [docs/ANALYSIS_PLAN.md](docs/ANALYSIS_PLAN.md) lists the next steps.
 
 ## Key results
 
@@ -11,7 +11,9 @@ End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, 
 - **Districts cannot be ranked reliably.** The order of the district medians changes from year to year (Spearman 0.12-0.22), and a station's offset from the rest of the city moves by more over time (typically 6.4 ug/m3) than the gap between the highest and lowest medians (4.7). Four stations were relocated in 2018 and 9 are not comparable across the period; only 5 of 25 keep a consistent difference. Instrument effects are possible but cannot be confirmed: official records give only the year of each change.
 - **No detectable trend in 3 years.** The mean station-day PM2.5 was 24.6, 22.8 and 24.9 ug/m3, above the Korean annual standard (15) every year; 48 multi-day Bad episodes were found, almost all in winter and spring.
 - **Next-day forecast.** A Ridge model chosen on four quarterly validation folds of 2018 has a 2019 MAE 10.0% lower than "tomorrow = today" (7.97 vs 8.86 ug/m3; 95% interval of the gain 4.3% to 15.6%, resampling weeks). As an alert for Bad days it misses more of them than persistence with the grade rule (recall 0.53 vs 0.61); with a threshold calibrated on 2018 (29 ug/m3) its recall rises to 0.76, no longer distinguishable from persistence. 2019 had been inspected before, so these are not untouched test results (see below).
-- **Data quality.** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file carry such a flag. The filter does not hide real peaks: restoring the flagged readings that look real changes the grade of 83 of 26,247 station-days. Seoul has no daily value on 18 days of 2019, including 9 in a row after the largest episode, so the analysis uses 1,077 valid days.
+- **Data quality.** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file carry such a flag. The filter does not hide real peaks: restoring the flagged readings that look real changes the grade of 83 of 26,247 station-days. The Kaggle file has no daily value on 18 days of 2019, including 9 in a row after the largest episode, so the analysis uses 1,077 valid days; the official file has those days (notebook 07).
+
+- **Official data 2015-2025 reproduces the official statistics.** The extended series built from the Seoul Open Data Plaza matches 86.4% of 66 official station-year means exactly after rounding and 98.5% within 1 ug/m3; its whole-Seoul PM2.5 mean for 2024 is 17.55 ug/m3 against the official 17.6. For PM, the provisional files equal the AirKorea final data of 2024.
 
 ![Daily PM2.5 and PM10](reports/figures/02_daily_series.png)
 
@@ -25,6 +27,7 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 - **Content:** 3,885,066 hourly readings (25 stations x 6 pollutants, 2017-01-01 to 2019-12-31) with an instrument status code.
 - **Timestamps:** Korean Standard Time, marking the start of each hourly average. Official Korean data label the end of the hour, one hour later; notebook 01 verifies the offset against the Seoul Open API.
 - The raw files are not committed; `notebooks/00_data_acquisition.ipynb` downloads them. See [data/README.md](data/README.md).
+- **Extended data (2015-2025):** official hourly files of the Seoul Open Data Plaza, OA-15526 (2015-2022) and OA-2221 (2023-2025), downloaded by `seoul_air.sources` and compared with the AirKorea final data and the official annual means in [notebook 07](notebooks/07_data_2015_2025.ipynb). Source comparison and changes of methodology: [data/README.md](data/README.md#extended-source-2015-2025-notebook-07).
 
 ## Methodology
 
@@ -37,6 +40,7 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 | [04 Pollutants and episodes](notebooks/04_pollutants_and_episodes.ipynb) | Pollutant correlations, PM vs ozone seasons, multi-day episodes, coarse-dust days |
 | [05 Forecasting](notebooks/05_forecasting.ipynb) | Next-day PM2.5 per district: baselines, Ridge, gradient boosting, alert threshold calibrated on validation, weekly block bootstrap |
 | [06 Insights summary](notebooks/06_insights_summary.ipynb) | Findings, recommendations and limitations for a non-technical reader |
+| [07 Extended data](notebooks/07_data_2015_2025.ipynb) | Official Seoul data 2015-2025: source comparison, loading, validation against official annual means |
 
 **Forecast protocol.** One row per district and issue day; target = next-day mean PM2.5. Features use only data available at the end of the issue day (pollutants of the day, PM2.5 lags, 7-day mean, city-wide mean and its change, season, station). Fit on 2017-2018 and validated on four expanding-window folds, one forecast origin at the start of each quarter of 2018. Settings, the choice of model (lowest mean validation MAE) and the alert threshold (highest out-of-fold F1) come only from these folds. Metrics: MAE, RMSE, bias, Korean grade accuracy, and precision / recall of Bad-or-worse days, with the same rounding as the grade. 95% intervals resample whole weeks of 2019.
 
@@ -48,17 +52,18 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 - Three years only: too short to separate a trend from year-to-year variation, and the seasonal management system introduced in December 2019 cannot be evaluated.
 - One station per district; some district-months are largely missing (for example Gwanak-gu, September 2019).
 - Station levels are not fully comparable over time. The official history gives the year of relocations and equipment replacements, not the month or the instrument, so the cause of a level shift, such as those of Yeongdeungpo-gu, cannot be confirmed.
-- 18 days of 2019 have no valid value for any station, among them 2019-03-09 to 2019-03-17. They are left missing, the evaluation year covers 347 of 365 days, and a likely 3-day episode in May 2019 is split by one of these gaps.
+- In the Kaggle file, 18 days of 2019 have no valid value for any station, among them 2019-03-09 to 2019-03-17 (the official file has them). They are left missing, the evaluation year covers 347 of 365 days, and a likely 3-day episode in May 2019 is split by one of these gaps.
 
 ## Project structure
 
 ```
 ├── data/                 # raw/ (never edited), external/, processed/  (not committed); reference/ (official station history)
 ├── notebooks/            # 00-06, run in order
-├── src/seoul_air/        # loading and cleaning, PM grades, episodes, station levels, forecast, metrics, key figures
+├── src/seoul_air/        # loading and cleaning, official sources, PM grades, episodes, station levels, forecast, metrics, key figures
 ├── tests/                # pytest for src/ and for every figure quoted in this README
 ├── reports/              # figures/ and metrics/ written by the notebooks
 ├── docs/ANALYSIS_PLAN.md # roadmap and checklists
+├── tools/                # one-off checks outside the pipeline (AirKorea final data)
 ├── run.py                # install, lint, test, notebooks, all: works on Windows, macOS and Linux
 ├── requirements.txt      # direct dependencies, with version ranges
 ├── constraints.txt       # exact versions that ran the project (Python 3.10)
@@ -73,7 +78,7 @@ Tested with Python 3.10. The same commands work on Windows, macOS and Linux; `ma
 python -m venv .venv
 .venv\Scripts\activate          # Windows  (source .venv/bin/activate on macOS/Linux)
 python run.py install           # pip install -r requirements.txt -c constraints.txt
-python run.py all               # lint, run notebooks 00-06 in order (00 downloads the data), then the tests
+python run.py all               # lint, run every notebook in order (00 and 07 download the data), then the tests
 ```
 
 Single steps: `python run.py lint`, `python run.py test`, `python run.py notebooks` (or `python run.py notebooks 03` to start from notebook 03). The tests include a check that every figure in **Key results** matches the files in `reports/metrics/`, so the README cannot drift from the notebooks. Notebook 05 takes several minutes; `run.py` limits the threads of the numerical libraries to keep memory use low.
@@ -88,4 +93,4 @@ Python, pandas, NumPy, scikit-learn, SciPy, Matplotlib, seaborn, pytest, GitHub 
 
 ## License
 
-Code and documentation: [MIT](LICENSE). The data is not part of the repository: the Kaggle dataset is published under CC BY-SA 4.0, and the reference tables in `data/reference/` come from the Seoul Open Data Plaza and a Seoul Metropolitan Government report (see [data/README.md](data/README.md)).
+Code and documentation: [MIT](LICENSE). The data is not part of the repository: the Kaggle dataset is published under CC BY-SA 4.0, and the official Seoul files (OA-15526, OA-2221) are under the Korea Open Government License Type 1, and the reference tables in `data/reference/` come from the Seoul Open Data Plaza, AirKorea and a Seoul Metropolitan Government report (see [data/README.md](data/README.md)).

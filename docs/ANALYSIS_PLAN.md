@@ -6,7 +6,7 @@ Roadmap for the project, in the order the work should be done. Each phase ends w
 
 > **When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be predicted well enough to warn residents?**
 
-Dataset: Kaggle *Air Pollution in Seoul*, hourly, 25 district stations, 2017-2019 (see `data/README.md`).
+Dataset: Kaggle *Air Pollution in Seoul*, hourly, 25 district stations, 2017-2019 (notebooks 00-06), and the official Seoul files for 2015-2025 (notebook 07). See `data/README.md`.
 
 | # | Question | Notebook | Status |
 |---|---|---|---|
@@ -71,6 +71,15 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [ ] Korean summary reviewed by a native speaker if possible
 - [ ] Optional: Streamlit dashboard (seasonal profile, next-day forecast)
 - [ ] Final check: delete `data/processed`, run `python run.py all`, everything runs clean
+
+## Phase 6 - Extended data, 2015-2025 (`07`)
+
+- [x] Compare OA-2221, OA-15526 and the AirKorea final data: coverage, format, licence, final or provisional
+- [x] Reproducible download with a check of the served file names; one schema for both Seoul files
+- [x] Check the sources against each other (Kaggle = OA-15526; OA-2221 = OA-15526 one hour later) and against the AirKorea final data of 2024
+- [x] Validate the annual means against official Seoul figures
+- [ ] A personal Seoul Open API key to validate all 25 stations (the sample key returns five rows a year)
+- [ ] Move notebooks 01-06 to the extended data (next phase)
 
 ## What makes it stand out to recruiters in Korea
 

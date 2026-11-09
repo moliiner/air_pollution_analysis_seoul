@@ -1,9 +1,9 @@
 """Run the project on any system (Windows, macOS, Linux) without make.
 
     python run.py install        install the pinned dependencies
-    python run.py lint           check src, tests and this file with pyflakes
+    python run.py lint           check src, tests, tools and this file with pyflakes
     python run.py test           run the test suite
-    python run.py notebooks      execute notebooks 00-06 in order, in fresh kernels
+    python run.py notebooks      execute every notebook in order, in fresh kernels
     python run.py notebooks 03   execute from notebook 03 onward
     python run.py all            lint, notebooks, then tests (the full check)
 """
@@ -28,7 +28,7 @@ def install():
 
 
 def lint():
-    return call("pyflakes", "src", "tests", "run.py")
+    return call("pyflakes", "src", "tests", "tools", "run.py")
 
 
 def test():

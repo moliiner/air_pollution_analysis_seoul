@@ -7,14 +7,17 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 - Chat replies to the user: **Spanish**, concise.
 
 ## Dataset facts
-- Kaggle "Air Pollution in Seoul" (bappekim): hourly readings, 25 stations (one per district), 6 pollutants, 2017-01-01 to 2019-12-31. No weather variables.
+- Kaggle "Air Pollution in Seoul" (bappekim): hourly readings, 25 stations (one per district), 6 pollutants, 2017-01-01 to 2019-12-31. No weather variables. It is a copy of the Seoul file OA-15526, with 18 days of 2019 missing that the official file has.
+- Extended data 2015-2025 (notebook 07, `seoul_air.sources`): OA-15526 for 2015-2022 (start-of-hour labels, instrument status) and OA-2221 for 2023-2025 (end-of-hour labels moved back one hour; no status, flagged readings already blank). Both are provisional; for PM they equal the AirKorea final data of 2024, and the annual means reproduce the official Seoul figures (`reference/official_annual_means.csv`). New analyses should use `air_hourly_2015_2025.parquet` / `air_daily_2015_2025.parquet`.
 - `Measurement_info.csv` is the source used: it has the instrument status (only 0 = normal is valid). `Measurement_summary.csv` has no status and keeps instrument errors (PM2.5 above 500 ug/m3); do not use it for analysis.
 - Units: PM10 and PM2.5 in ug/m3; SO2, NO2, CO and O3 in ppm.
 - A district value is the value of one station, and stations change: four were relocated in 2018 and most had equipment replaced in 2018-2019 (`data/reference/station_history.csv`, years only). Do not present a ranking of districts; compare stations on the same days, with intervals (notebook 03).
 - 18 days of 2019 have no valid value for any station, so 1,077 of the 1,095 days are valid: use 1,077 as the denominator of city-day shares, leave the gaps missing and do not draw lines across them (see `reports/metrics/01_network_gap_days.csv`).
 
 ## Layout
-- `notebooks/00`-`06`: the analysis, run in order. Notebook 01 writes `data/processed`, which the later notebooks read. Notebook 06 is the plain-language summary.
+- `notebooks/00`-`06`: the analysis of the Kaggle data, run in order. Notebook 01 writes `data/processed`, which the later notebooks read. Notebook 06 is the plain-language summary.
+- `notebooks/07`: builds and validates the extended 2015-2025 data from the official Seoul files.
+- `tools/`: one-off checks outside the pipeline (`compare_airkorea_final.py` needs `python-calamine` and a 400 MB download).
 - `src/seoul_air/`: reusable code. Notebooks import from here instead of copying code: `data` (loading, cleaning, timestamps), `grades`, `episodes`, `station_levels`, `features`, `forecast` (folds, models, alert calibration, evaluation: `run_forecast`), `metrics`, `report` (key figures).
 - `tests/`: pytest for everything in `src/`, plus `test_readme_numbers.py`, which checks every figure of the README's Key results against `reports/metrics/*_key_figures.json`.
 - `reports/figures`, `reports/metrics`: outputs written by the notebooks. Each notebook 01-05 ends by saving its key figures with `save_key_figures`.

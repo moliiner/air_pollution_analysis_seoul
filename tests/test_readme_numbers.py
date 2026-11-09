@@ -14,7 +14,7 @@ NUMBER_WORDS = {4: "Four", 5: "Five", 9: "nine"}
 
 @pytest.fixture(scope="module")
 def k():
-    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05"]}
+    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05", "07"]}
 
 
 def quoted(text):
@@ -80,3 +80,11 @@ def test_key_figures_agree_with_the_other_metric_files(k):
     assert len(gaps) == k["01"]["gap_days"]
     comparison = pd.read_csv(config.METRICS / "03_station_comparison.csv")
     assert comparison["category"].value_counts().to_dict() == k["03"]["categories"]
+
+
+def test_extended_data(k):
+    f = k["07"]
+    quoted(f"matches {f['station_identical_pct']:.1f}% of {f['station_years_compared']} official station-year means "
+           f"exactly after rounding and {f['station_within_1_pct']:.1f}% within 1 ug/m3")
+    quoted(f"its whole-Seoul PM2.5 mean for 2024 is {f['city_pm25_by_year']['2024']:.2f} ug/m3 "
+           f"against the official {f['city_official']['2024_pm25']:g}")

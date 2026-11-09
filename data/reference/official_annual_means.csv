@@ -1,0 +1,73 @@
+year,scope,district,pollutant,official_value,source,url
+2015,station,Gangnam-gu,pm10,46.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2015
+2015,station,Gangnam-gu,pm25,23.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2015
+2015,station,Gangdong-gu,pm10,44.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2015
+2015,station,Gangdong-gu,pm25,22.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2015
+2015,station,Gangbuk-gu,pm10,43.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2015
+2015,station,Gangbuk-gu,pm25,22.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2015
+2016,station,Gangnam-gu,pm10,51.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2016
+2016,station,Gangnam-gu,pm25,27.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2016
+2016,station,Gangdong-gu,pm10,53.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2016
+2016,station,Gangdong-gu,pm25,27.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2016
+2016,station,Gangbuk-gu,pm10,42.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2016
+2016,station,Gangbuk-gu,pm25,26.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2016
+2017,station,Gangnam-gu,pm10,44.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2017
+2017,station,Gangnam-gu,pm25,25.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2017
+2017,station,Gangdong-gu,pm10,48.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2017
+2017,station,Gangdong-gu,pm25,24.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2017
+2017,station,Gangbuk-gu,pm10,37.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2017
+2017,station,Gangbuk-gu,pm25,22.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2017
+2018,station,Gangnam-gu,pm10,35.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2018
+2018,station,Gangnam-gu,pm25,22.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2018
+2018,station,Gangdong-gu,pm10,44.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2018
+2018,station,Gangdong-gu,pm25,23.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2018
+2018,station,Gangbuk-gu,pm10,35.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2018
+2018,station,Gangbuk-gu,pm25,19.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2018
+2019,station,Gangnam-gu,pm10,41.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2019
+2019,station,Gangnam-gu,pm25,25.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2019
+2019,station,Gangdong-gu,pm10,43.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2019
+2019,station,Gangdong-gu,pm25,26.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2019
+2019,station,Gangbuk-gu,pm10,46.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2019
+2019,station,Gangbuk-gu,pm25,25.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2019
+2020,station,Gangnam-gu,pm10,32.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2020
+2020,station,Gangnam-gu,pm25,21.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2020
+2020,station,Gangdong-gu,pm10,37.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2020
+2020,station,Gangdong-gu,pm25,23.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2020
+2020,station,Gangbuk-gu,pm10,38.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2020
+2020,station,Gangbuk-gu,pm25,21.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2020
+2021,station,Gangnam-gu,pm10,37.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2021
+2021,station,Gangnam-gu,pm25,20.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2021
+2021,station,Gangdong-gu,pm10,40.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2021
+2021,station,Gangdong-gu,pm25,21.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2021
+2021,station,Gangbuk-gu,pm10,39.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2021
+2021,station,Gangbuk-gu,pm25,19.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2021
+2022,station,Gangnam-gu,pm10,32.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2022
+2022,station,Gangnam-gu,pm25,18.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2022
+2022,station,Gangdong-gu,pm10,34.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2022
+2022,station,Gangdong-gu,pm25,19.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2022
+2022,station,Gangbuk-gu,pm10,34.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2022
+2022,station,Gangbuk-gu,pm25,18.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2022
+2023,station,Gangnam-gu,pm10,37.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2023
+2023,station,Gangnam-gu,pm25,19.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2023
+2023,station,Gangdong-gu,pm10,40.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2023
+2023,station,Gangdong-gu,pm25,21.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2023
+2023,station,Gangbuk-gu,pm10,38.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2023
+2023,station,Gangbuk-gu,pm25,19.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2023
+2024,station,Gangnam-gu,pm10,31.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2024
+2024,station,Gangnam-gu,pm25,18.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2024
+2024,station,Gangdong-gu,pm10,31.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2024
+2024,station,Gangdong-gu,pm25,17.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2024
+2024,station,Gangbuk-gu,pm10,29.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2024
+2024,station,Gangbuk-gu,pm25,17.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2024
+2025,station,Gangnam-gu,pm10,32.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2025
+2025,station,Gangnam-gu,pm25,18.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2025
+2025,station,Gangdong-gu,pm10,34.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2025
+2025,station,Gangdong-gu,pm25,21.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2025
+2025,station,Gangbuk-gu,pm10,31.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2025
+2025,station,Gangbuk-gu,pm25,18.0,"Seoul Open API YearlyAverageAirQuality (dataset OA-2216), sample key: first 5 rows of each year",http://openapi.seoul.go.kr:8088/sample/json/YearlyAverageAirQuality/1/5/2025
+2015,city,,pm25,23.0,Seoul Metropolitan Government figure quoted in the press,https://www.segye.com/view/20250109523934
+2020,city,,pm25,21.0,Seoul Metropolitan Government figure quoted in the press,https://www.segye.com/view/20250109523934
+2021,city,,pm25,19.8,Seoul Metropolitan Government figure quoted in the press,https://www.metroseoul.co.kr/article/20220102500139
+2024,city,,pm25,17.6,Seoul Metropolitan Government figure quoted in the press,https://news.tf.co.kr/read/life/2168810.htm
+2025,city,,pm25,18.0,Seoul Metropolitan Government figure quoted in the press,https://go.seoul.co.kr/news/newsView.php?id=20260507018008
+2025,city,,pm10,32.0,Seoul Metropolitan Government figure quoted in the press,https://go.seoul.co.kr/news/newsView.php?id=20260507018008
