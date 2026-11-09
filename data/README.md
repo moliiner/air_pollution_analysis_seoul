@@ -84,3 +84,36 @@ Downloaded by `seoul_air.sources.download_extended()` into `data/raw/seoul/` (no
 | `air_hourly_2015_2025.parquet` | station x hour, 2015-2025 | as `air_hourly.parquet` |
 | `air_daily_2015_2025.parquet` | station x day (at least 18 valid hours) | as `air_daily.parquet` |
 
+## Weather, 2015-2025 (notebook 08)
+
+Downloaded by `seoul_air.weather.download_era5()` and `download_station_observations()` into `data/raw/weather/` (not committed). No key is needed.
+
+| Source | Role | Time | Licence |
+|---|---|---|---|
+| [ERA5 reanalysis](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels) through the [Open-Meteo historical API](https://open-meteo.com/en/docs/historical-weather-api) | Weather of the analysis; nearest grid point to central Seoul (37.5 N, 127.0 E) | UTC instants; precipitation is the total of the hour before | ERA5: Copernicus licence, attribution ("Contains modified Copernicus Climate Change Service information"); Open-Meteo: CC BY 4.0 |
+| KMA ASOS 108 Seoul (WMO 47108) through [Meteostat](https://meteostat.net/en/station/47108) | Check of ERA5 against measurements only | UTC instants; 3-hourly before 2018, hourly from 2021; precipitation from 2022 | CC BY-NC 4.0, not redistributed |
+
+The official KMA station data (data.kma.go.kr, KMA API Hub, data.go.kr) needs a personal key and is not used.
+
+| Column | Unit | Hour [h, h+1) KST gets |
+|---|---|---|
+| `temperature_c` | degC (2 m) | mean of the instants h and h+1 |
+| `relative_humidity_pct` | % (2 m) | mean of the instants h and h+1 |
+| `precipitation_mm` | mm | the total reported at h+1 |
+| `wind_speed_ms` | m/s (10 m) | mean of the instants h and h+1 |
+| `wind_direction_deg` | degrees the wind blows **from** | from the mean wind components |
+| `wind_u_ms`, `wind_v_ms` | m/s, eastward and northward | mean of the instants h and h+1 |
+| `boundary_layer_height_m` | m (mixing layer) | mean of the instants h and h+1 |
+| `surface_pressure_hpa` | hPa | mean of the instants h and h+1 |
+
+- **Time zone:** ERA5 is in UTC and is converted to KST (UTC+9), with the hour labelled by its start like the pollution tables.
+- **Missing data:** none except the boundary layer height for 2024-01-01 to 2024-06-30 (UTC), absent from the Open-Meteo archive; left missing. Daily values need all 24 hours of their own variable.
+- **Single point:** one ERA5 grid cell (about 25 km) stands for the whole city.
+- **Observed weather is for analysis, not for forecasting:** the weather of a day is known only after it. A next-day forecast may use the weather of the issue day and earlier (`weather_known_at_issue`), or a weather forecast for the target day, never the observed weather of the target day.
+
+| File | Grain |
+|---|---|
+| `weather_hourly_2015_2025.parquet` | KST hour |
+| `weather_daily_2015_2025.parquet` | KST day |
+| `air_weather_daily_2015_2025.parquet` | station-day of `air_daily_2015_2025` with the weather of the same day |
+

@@ -81,6 +81,14 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [ ] A personal Seoul Open API key to validate all 25 stations (the sample key returns five rows a year)
 - [ ] Move notebooks 01-06 to the extended data (next phase)
 
+## Phase 7 - Weather, 2015-2025 (`08`)
+
+- [x] Hourly ERA5 weather via Open-Meteo: wind, precipitation, humidity, temperature, pressure, boundary layer height
+- [x] Units, KST alignment and missing data documented; check against the Seoul station (ASOS 108)
+- [x] Join with the pollution tables; tests; guard against using observed weather of the target day in a forecast
+- [ ] Fill the boundary layer height of 2024-01 to 2024-06 from the Copernicus Climate Data Store (needs an account)
+- [ ] Optional: official KMA ASOS data with a personal key
+
 ## What makes it stand out to recruiters in Korea
 
 - **A clear question with a local angle**: 미세먼지 (fine dust) is a daily topic in Korea; recruiters understand the problem immediately.

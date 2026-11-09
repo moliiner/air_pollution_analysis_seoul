@@ -1,0 +1,42 @@
+{
+  "blh_missing_hours": 4369,
+  "grid_point": [
+    37.5,
+    127.0
+  ],
+  "hourly_check": {
+    "relative_humidity_pct": {
+      "bias_era5_minus_station": 7.587838519522073,
+      "correlation": 0.8893530915704292,
+      "hours": 69383,
+      "mae": 9.14055316143724
+    },
+    "temperature_c": {
+      "bias_era5_minus_station": -0.3891577551667484,
+      "correlation": 0.9926524762598589,
+      "hours": 69386,
+      "mae": 1.0659196379673133
+    },
+    "wind_speed_ms": {
+      "bias_era5_minus_station": 0.017849410189642534,
+      "correlation": 0.6708378099916088,
+      "hours": 69382,
+      "mae": 0.8255782479605663
+    }
+  },
+  "kst_hours": 96432,
+  "rain_check": {
+    "correlation": 0.8438658151986952,
+    "days": 1247,
+    "mean_era5_mm": 4.095990376904571,
+    "mean_station_mm": 5.380352846832397,
+    "wet_day_agreement": 0.9182036888532478
+  },
+  "spearman_all_days": {
+    "boundary_layer_height_mean_m": -0.39331789042396076,
+    "precipitation_mm": -0.24849656381747362,
+    "relative_humidity_mean_pct": -0.07012342958115357,
+    "temperature_mean_c": -0.25495580276839214,
+    "wind_speed_mean_ms": -0.2939262325874071
+  }
+}

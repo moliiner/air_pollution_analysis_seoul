@@ -14,7 +14,7 @@ NUMBER_WORDS = {4: "Four", 5: "Five", 9: "nine"}
 
 @pytest.fixture(scope="module")
 def k():
-    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05", "07"]}
+    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05", "07", "08"]}
 
 
 def quoted(text):
@@ -88,3 +88,13 @@ def test_extended_data(k):
            f"exactly after rounding and {f['station_within_1_pct']:.1f}% within 1 ug/m3")
     quoted(f"its whole-Seoul PM2.5 mean for 2024 is {f['city_pm25_by_year']['2024']:.2f} ug/m3 "
            f"against the official {f['city_official']['2024_pm25']:g}")
+
+
+def test_weather(k):
+    f = k["08"]
+    check = f["hourly_check"]
+    quoted(f"follows the Seoul station closely for temperature (correlation {check['temperature_c']['correlation']:.3f}) "
+           f"and less for wind speed ({check['wind_speed_ms']['correlation']:.3f})")
+    rho = f["spearman_all_days"]
+    quoted(f"strongest for the boundary layer height (Spearman {rho['boundary_layer_height_mean_m']:.2f}) "
+           f"and wind speed ({rho['wind_speed_mean_ms']:.2f})")

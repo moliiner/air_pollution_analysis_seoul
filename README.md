@@ -13,6 +13,7 @@ End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, 
 - **Next-day forecast.** A Ridge model chosen on four quarterly validation folds of 2018 has a 2019 MAE 10.0% lower than "tomorrow = today" (7.97 vs 8.86 ug/m3; 95% interval of the gain 4.3% to 15.6%, resampling weeks). As an alert for Bad days it misses more of them than persistence with the grade rule (recall 0.53 vs 0.61); with a threshold calibrated on 2018 (29 ug/m3) its recall rises to 0.76, no longer distinguishable from persistence. 2019 had been inspected before, so these are not untouched test results (see below).
 - **Data quality.** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file carry such a flag. The filter does not hide real peaks: restoring the flagged readings that look real changes the grade of 83 of 26,247 station-days. The Kaggle file has no daily value on 18 days of 2019, including 9 in a row after the largest episode, so the analysis uses 1,077 valid days; the official file has those days (notebook 07).
 
+- **Weather 2015-2025.** Hourly ERA5 weather (wind, rain, humidity, temperature, boundary layer height) is joined to every station-day; it follows the Seoul station closely for temperature (correlation 0.993) and less for wind speed (0.671). Same-day associations with city PM2.5 are strongest for the boundary layer height (Spearman -0.39) and wind speed (-0.29). Observed weather is used for analysis only, never as known in advance in a forecast.
 - **Official data 2015-2025 reproduces the official statistics.** The extended series built from the Seoul Open Data Plaza matches 86.4% of 66 official station-year means exactly after rounding and 98.5% within 1 ug/m3; its whole-Seoul PM2.5 mean for 2024 is 17.55 ug/m3 against the official 17.6. For PM, the provisional files equal the AirKorea final data of 2024.
 
 ![Daily PM2.5 and PM10](reports/figures/02_daily_series.png)
@@ -41,6 +42,7 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 | [05 Forecasting](notebooks/05_forecasting.ipynb) | Next-day PM2.5 per district: baselines, Ridge, gradient boosting, alert threshold calibrated on validation, weekly block bootstrap |
 | [06 Insights summary](notebooks/06_insights_summary.ipynb) | Findings, recommendations and limitations for a non-technical reader |
 | [07 Extended data](notebooks/07_data_2015_2025.ipynb) | Official Seoul data 2015-2025: source comparison, loading, validation against official annual means |
+| [08 Weather](notebooks/08_weather_2015_2025.ipynb) | Hourly ERA5 weather 2015-2025: units, KST alignment, missing data, check against the Seoul station, join with pollution |
 
 **Forecast protocol.** One row per district and issue day; target = next-day mean PM2.5. Features use only data available at the end of the issue day (pollutants of the day, PM2.5 lags, 7-day mean, city-wide mean and its change, season, station). Fit on 2017-2018 and validated on four expanding-window folds, one forecast origin at the start of each quarter of 2018. Settings, the choice of model (lowest mean validation MAE) and the alert threshold (highest out-of-fold F1) come only from these folds. Metrics: MAE, RMSE, bias, Korean grade accuracy, and precision / recall of Bad-or-worse days, with the same rounding as the grade. 95% intervals resample whole weeks of 2019.
 
@@ -48,7 +50,7 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 
 ## Limitations
 
-- No weather data (wind, rain, humidity), so its role in day-to-day changes cannot be measured.
+- Notebooks 00-06 use no weather data. Hourly weather for 2015-2025 is now available (notebook 08), from a reanalysis at one grid point; its boundary layer height is missing for the first half of 2024.
 - Three years only: too short to separate a trend from year-to-year variation, and the seasonal management system introduced in December 2019 cannot be evaluated.
 - One station per district; some district-months are largely missing (for example Gwanak-gu, September 2019).
 - Station levels are not fully comparable over time. The official history gives the year of relocations and equipment replacements, not the month or the instrument, so the cause of a level shift, such as those of Yeongdeungpo-gu, cannot be confirmed.
@@ -59,7 +61,7 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 ```
 ├── data/                 # raw/ (never edited), external/, processed/  (not committed); reference/ (official station history)
 ├── notebooks/            # 00-06, run in order
-├── src/seoul_air/        # loading and cleaning, official sources, PM grades, episodes, station levels, forecast, metrics, key figures
+├── src/seoul_air/        # loading and cleaning, official sources, weather, PM grades, episodes, station levels, forecast, metrics, key figures
 ├── tests/                # pytest for src/ and for every figure quoted in this README
 ├── reports/              # figures/ and metrics/ written by the notebooks
 ├── docs/ANALYSIS_PLAN.md # roadmap and checklists
@@ -93,4 +95,4 @@ Python, pandas, NumPy, scikit-learn, SciPy, Matplotlib, seaborn, pytest, GitHub 
 
 ## License
 
-Code and documentation: [MIT](LICENSE). The data is not part of the repository: the Kaggle dataset is published under CC BY-SA 4.0, and the official Seoul files (OA-15526, OA-2221) are under the Korea Open Government License Type 1, and the reference tables in `data/reference/` come from the Seoul Open Data Plaza, AirKorea and a Seoul Metropolitan Government report (see [data/README.md](data/README.md)).
+Code and documentation: [MIT](LICENSE). The data is not part of the repository: the Kaggle dataset is published under CC BY-SA 4.0, and the official Seoul files (OA-15526, OA-2221) are under the Korea Open Government License Type 1, and the reference tables in `data/reference/` come from the Seoul Open Data Plaza, AirKorea and a Seoul Metropolitan Government report, and the weather comes from ERA5 (Copernicus licence) through Open-Meteo (CC BY 4.0) (see [data/README.md](data/README.md)).
