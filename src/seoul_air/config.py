@@ -6,10 +6,16 @@ DATA_RAW = ROOT / "data" / "raw"
 DATA_EXTERNAL = ROOT / "data" / "external"
 DATA_PROCESSED = ROOT / "data" / "processed"
 STATION_HISTORY = ROOT / "data" / "reference" / "station_history.csv"
+API_SAMPLES = ROOT / "data" / "reference" / "seoul_api_hourly_samples.csv"
+REALTIME_LABEL_LOG = ROOT / "data" / "reference" / "realtime_label_check.csv"
 FIGURES = ROOT / "reports" / "figures"
 METRICS = ROOT / "reports" / "metrics"
 
 TIMEZONE = "Asia/Seoul"
+# Timestamps of the Kaggle files mark the START of each hourly average, in KST
+# (verified in notebook 01). Official Seoul and AirKorea labels mark its END, so
+# Kaggle 07:00 (07:00-08:00) is the official 08:00 reading.
+OFFICIAL_LABEL_OFFSET_HOURS = 1
 
 # Kaggle "Air Pollution in Seoul" (bappekim), public download endpoint
 KAGGLE_URL = "https://www.kaggle.com/api/v1/datasets/download/bappekim/air-pollution-in-seoul"

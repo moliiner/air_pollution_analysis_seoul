@@ -8,10 +8,12 @@ import zipfile
 import pandas as pd
 
 from seoul_air.config import (
+    API_SAMPLES,
     DATA_RAW,
     ITEM_CODES,
     KAGGLE_URL,
     MIN_HOURS_PER_DAY,
+    OFFICIAL_LABEL_OFFSET_HOURS,
     RAW_FILES,
     STATION_HISTORY,
     STATUS_NORMAL,
@@ -78,6 +80,45 @@ def load_measurements():
         "Instrument status": "status",
     })
     out["pollutant"] = out["item_code"].map(ITEM_CODES).astype("category")
+    return out
+
+
+def load_api_samples():
+    """Hourly readings downloaded from the Seoul Open API, with their official label."""
+    samples = pd.read_csv(API_SAMPLES, dtype={"official_label": str})
+    samples["official_label"] = pd.to_datetime(samples["official_label"], format="%Y%m%d%H%M")
+    return samples
+
+
+def to_official_label(datetimes):
+    """Official (end of hour) label of a Kaggle timestamp (start of hour)."""
+    return datetimes + pd.Timedelta(hours=OFFICIAL_LABEL_OFFSET_HOURS)
+
+
+def label_lag_matches(long_df, samples, lags=(-2, -1, 0, 1, 2), tolerance=1e-6):
+    """How many official values equal the dataset value lag hours away from their label.
+
+    The lag with almost all values identical tells how the two sets of labels
+    relate; with any other lag only a coincidence can match.
+    """
+    times = {label + pd.Timedelta(hours=lag) for label in samples["official_label"] for lag in lags}
+    near = long_df[long_df["datetime"].isin(times)]
+    values = near.set_index(["datetime", "station_code", "pollutant"])["value"]
+    values.index = values.index.set_levels(values.index.levels[2].astype(str), level=2)
+    rows = []
+    for lag in lags:
+        keys = pd.MultiIndex.from_arrays([
+            samples["official_label"] + pd.Timedelta(hours=lag),
+            samples["station_code"],
+            samples["pollutant"],
+        ])
+        dataset = values.reindex(keys).to_numpy()
+        compared = ~pd.isna(dataset)
+        identical = (abs(dataset[compared] - samples["value"].to_numpy()[compared]) < tolerance).sum()
+        rows.append({"dataset_hour_minus_official_label": lag, "compared": int(compared.sum()),
+                     "identical": int(identical)})
+    out = pd.DataFrame(rows)
+    out["identical_%"] = (100 * out["identical"] / out["compared"]).round(1)
     return out
 
 

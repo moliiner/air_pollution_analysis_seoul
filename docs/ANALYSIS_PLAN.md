@@ -36,6 +36,7 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [x] Complete hourly grid; missing hours left as missing
 - [x] Daily means with the 18-of-24-hours rule; Korean PM grades
 - [x] Check that the status filter does not remove real peaks
+- [x] Verify the timestamps against the Seoul Open API: KST, start of the hour
 - [x] Document the 18 network-wide gap days and exclude them from denominators
 - [x] Save `air_hourly.parquet` and `air_daily.parquet`
 

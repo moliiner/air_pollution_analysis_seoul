@@ -22,7 +22,14 @@ Kaggle, *Air Pollution in Seoul* (`bappekim/air-pollution-in-seoul`): <https://w
 | `Measurement_station_info.csv` | Station code, district, address, coordinates | 25 x 5 |
 | `Measurement_summary.csv` | Wide version without status; keeps instrument errors (**not used**, see notebook 01) | 647,511 x 11 |
 
-Period: 2017-01-01 00:00 to 2019-12-31 23:00 (KST), 25 stations, 6 pollutants.
+Period: 2017-01-01 00:00 to 2019-12-31 23:00, 25 stations, 6 pollutants.
+
+**Timestamps.** Each timestamp is in Korean Standard Time (KST, UTC+9, no daylight saving) and marks the **start** of the hourly average: 07:00 is the average of 07:00-08:00, and a calendar day groups 00:00-24:00. Official Korean sources label the same average by the **end** of the hour (AirKorea writes 1-24 h; the Seoul Open API writes 00:00 instead of 24:00), so a Kaggle timestamp is one hour earlier than the official label. The Kaggle page does not state either point; notebook 01 (section 3.1) verifies both:
+
+- Hourly values downloaded from the Seoul Open API equal the Kaggle values one hour before their official label (`reference/seoul_api_hourly_samples.csv`).
+- The real-time service publishes each label in KST as soon as that hour has ended (`reference/realtime_label_check.csv`), so its labels mark the end of the hour.
+
+What remains an assumption: that the archive of 2017-2019 used the same end-of-hour convention as the service in 2026. It is supported by the offset being the same one hour in every sampled hour of 2017-2019 that can be compared.
 
 Instrument status codes: 0 normal, 1 needs calibration, 2 abnormal, 4 power cut off, 8 under repair, 9 abnormal data. Only status 0 is kept.
 
