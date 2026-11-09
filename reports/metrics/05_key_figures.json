@@ -1,0 +1,31 @@
+{
+  "mae": {
+    "climatology": 10.831581506234054,
+    "hist_gradient_boosting": 8.51865474351821,
+    "persistence": 8.858835883480342,
+    "ridge": 7.970105499085755
+  },
+  "recall_calibrated": {
+    "persistence": 0.7392784206943499,
+    "ridge": 0.7597004765146358
+  },
+  "recall_grade_rule": {
+    "persistence": 0.6058543226684819,
+    "ridge": 0.5336963921034718
+  },
+  "selected_model": "ridge",
+  "skill_interval_pct": [
+    4.251304417688282,
+    15.64479322314407
+  ],
+  "skill_vs_persistence_pct": 10.032135103121863,
+  "threshold": {
+    "persistence": 30.0,
+    "ridge": 29.0
+  },
+  "validation_mae": {
+    "hist_gradient_boosting": 8.120322618902115,
+    "persistence": 8.605080585872777,
+    "ridge": 7.853867425947419
+  }
+}

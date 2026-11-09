@@ -1,0 +1,22 @@
+{
+  "categories": {
+    "Above the rest of the city": 1,
+    "Below the rest of the city": 4,
+    "No consistent difference": 11,
+    "Not comparable": 9
+  },
+  "median_gap_between_district_medians": 4.736413043478262,
+  "median_quarterly_offset_range": 6.361059155216761,
+  "min_pairwise_correlation": 0.9003660743013423,
+  "relocated_2017_2019": 4,
+  "spearman_between_years": [
+    0.11542901115813775,
+    0.21512411404597878
+  ],
+  "variance_share_pct": {
+    "Calendar month (season)": 23.38996909246798,
+    "Date (each single day)": 94.28442060027871,
+    "District": 0.6219841833263628,
+    "Month of each specific year": 27.110958018850617
+  }
+}

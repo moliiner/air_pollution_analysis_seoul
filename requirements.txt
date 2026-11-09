@@ -1,4 +1,5 @@
 # Lower bounds are the versions the code needs; upper caps stop a new major release from breaking the project.
+# constraints.txt pins the exact versions that ran the project: pip install -r requirements.txt -c constraints.txt
 pandas>=2.0,<4
 numpy>=1.26,<3
 scipy>=1.11,<2
@@ -13,4 +14,3 @@ nbformat>=5.10,<6
 pytest>=8.0,<9   # pytest 9 fails internally on Python 3.10
 pyflakes>=3.0,<5
 # geopandas>=0.14,<2   # optional, only for the district choropleth maps
-# streamlit>=1.40,<2   # optional, only for app/streamlit_app.py

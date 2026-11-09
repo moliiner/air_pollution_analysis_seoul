@@ -1,12 +1,12 @@
 # Seoul Air Quality: When and Where Is the Air Most Harmful?
 
-End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, SO2) from the 25 district stations of Seoul, 2017-2019: status-based data cleaning, temporal and spatial EDA, pollution episodes, and a next-day PM2.5 forecast evaluated against a persistence baseline on a held-out year.
+End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, SO2) from the 25 district stations of Seoul, 2017-2019: status-based data cleaning, temporal and spatial EDA, pollution episodes, and a next-day PM2.5 forecast evaluated against a persistence baseline on a later year.
 
-> **Status:** notebooks 00-05 are complete; the non-technical summary (notebook 06) is in progress.
+> **Status:** complete for the 2017-2019 dataset. [Notebook 06](notebooks/06_insights_summary.ipynb) summarises the findings for a non-technical reader; [docs/ANALYSIS_PLAN.md](docs/ANALYSIS_PLAN.md) lists the next steps.
 
 ## Key results
 
-- **Season matters far more than district, but daily swings matter most.** The calendar month accounts for 23.4% of the station-day variance of PM2.5 and the district for 0.6%; most of the rest is day-to-day change within the same month. The median daily PM2.5 peaks in March (34.4 ug/m3) and is lowest in September (10.7). In March 48.1% of station-days are graded Bad or Very bad, against 0.4% in August.
+- **Season matters far more than district, but daily swings matter most.** The calendar month accounts for 23.4% of the station-day variance of PM2.5 and the district for 0.6%; most of the rest is day-to-day change within the same month. The median daily PM2.5 peaks in March (34.4 ug/m3) and is lowest in September (10.7). In March 48.2% of station-days are graded Bad or Very bad, against 0.4% in August.
 - **PM2.5 is a city-wide phenomenon.** Daily PM2.5 correlates at 0.90 or more between any two districts, and the date accounts for 94.3% of the station-day variance.
 - **Districts cannot be ranked reliably.** The order of the district medians changes from year to year (Spearman 0.12-0.22), and a station's offset from the rest of the city moves by more over time (typically 6.4 ug/m3) than the gap between the highest and lowest medians (4.7). Four stations were relocated in 2018 and 9 are not comparable across the period; only 5 of 25 keep a consistent difference. Instrument effects are possible but cannot be confirmed: official records give only the year of each change.
 - **No detectable trend in 3 years.** The mean station-day PM2.5 was 24.6, 22.8 and 24.9 ug/m3, above the Korean annual standard (15) every year; 48 multi-day Bad episodes were found, almost all in winter and spring.
@@ -36,7 +36,7 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 | [03 Spatial EDA](notebooks/03_eda_spatial.ipynb) | Variance decomposition, station offsets over time, official relocations and equipment changes, level shifts, comparison of stations with intervals instead of a ranking |
 | [04 Pollutants and episodes](notebooks/04_pollutants_and_episodes.ipynb) | Pollutant correlations, PM vs ozone seasons, multi-day episodes, coarse-dust days |
 | [05 Forecasting](notebooks/05_forecasting.ipynb) | Next-day PM2.5 per district: baselines, Ridge, gradient boosting, alert threshold calibrated on validation, weekly block bootstrap |
-| [06 Insights summary](notebooks/06_insights_summary.ipynb) | Findings for a non-technical reader (in progress) |
+| [06 Insights summary](notebooks/06_insights_summary.ipynb) | Findings, recommendations and limitations for a non-technical reader |
 
 **Forecast protocol.** One row per district and issue day; target = next-day mean PM2.5. Features use only data available at the end of the issue day (pollutants of the day, PM2.5 lags, 7-day mean, city-wide mean and its change, season, station). Fit on 2017-2018 and validated on four expanding-window folds, one forecast origin at the start of each quarter of 2018. Settings, the choice of model (lowest mean validation MAE) and the alert threshold (highest out-of-fold F1) come only from these folds. Metrics: MAE, RMSE, bias, Korean grade accuracy, and precision / recall of Bad-or-worse days, with the same rounding as the grade. 95% intervals resample whole weeks of 2019.
 
@@ -55,23 +55,28 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 ```
 ├── data/                 # raw/ (never edited), external/, processed/  (not committed); reference/ (official station history)
 ├── notebooks/            # 00-06, run in order
-├── src/seoul_air/        # config, loading and cleaning, PM grades, episodes, station levels, forecast features, metrics
-├── tests/                # pytest for src/
+├── src/seoul_air/        # loading and cleaning, PM grades, episodes, station levels, forecast, metrics, key figures
+├── tests/                # pytest for src/ and for every figure quoted in this README
 ├── reports/              # figures/ and metrics/ written by the notebooks
 ├── docs/ANALYSIS_PLAN.md # roadmap and checklists
-├── Makefile              # install, test, lint, notebooks
-└── requirements.txt
+├── run.py                # install, lint, test, notebooks, all: works on Windows, macOS and Linux
+├── requirements.txt      # direct dependencies, with version ranges
+├── constraints.txt       # exact versions that ran the project (Python 3.10)
+└── LICENSE               # MIT
 ```
 
 ## How to reproduce
 
+Tested with Python 3.10. The same commands work on Windows, macOS and Linux; `make` is not needed (the Makefile only wraps `run.py`).
+
 ```bash
 python -m venv .venv
 .venv\Scripts\activate          # Windows  (source .venv/bin/activate on macOS/Linux)
-pip install -r requirements.txt
-pytest -q
-make notebooks                  # runs 00-06 in order; 00 downloads the data
+python run.py install           # pip install -r requirements.txt -c constraints.txt
+python run.py all               # lint, run notebooks 00-06 in order (00 downloads the data), then the tests
 ```
+
+Single steps: `python run.py lint`, `python run.py test`, `python run.py notebooks` (or `python run.py notebooks 03` to start from notebook 03). The tests include a check that every figure in **Key results** matches the files in `reports/metrics/`, so the README cannot drift from the notebooks. Notebook 05 takes several minutes; `run.py` limits the threads of the numerical libraries to keep memory use low.
 
 ## 한국어 요약
 
@@ -79,4 +84,8 @@ make notebooks                  # runs 00-06 in order; 00 downloads the data
 
 ## Tech stack
 
-Python, pandas, NumPy, scikit-learn, Matplotlib, seaborn, pytest, GitHub Actions.
+Python, pandas, NumPy, scikit-learn, SciPy, Matplotlib, seaborn, pytest, GitHub Actions.
+
+## License
+
+Code and documentation: [MIT](LICENSE). The data is not part of the repository: the Kaggle dataset is published under CC BY-SA 4.0, and the reference tables in `data/reference/` come from the Seoul Open Data Plaza and a Seoul Metropolitan Government report (see [data/README.md](data/README.md)).

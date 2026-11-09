@@ -14,15 +14,22 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 - 18 days of 2019 have no valid value for any station, so 1,077 of the 1,095 days are valid: use 1,077 as the denominator of city-day shares, leave the gaps missing and do not draw lines across them (see `reports/metrics/01_network_gap_days.csv`).
 
 ## Layout
-- `notebooks/00`-`06`: the analysis, run in order. Notebook 01 writes `data/processed`, which the later notebooks read.
-- `src/seoul_air/`: reusable code (loading, cleaning, grades, features, models). Notebooks import from here instead of copying code.
-- `tests/`: pytest for everything in `src/`.
-- `reports/figures`, `reports/metrics`: outputs written by the notebooks.
+- `notebooks/00`-`06`: the analysis, run in order. Notebook 01 writes `data/processed`, which the later notebooks read. Notebook 06 is the plain-language summary.
+- `src/seoul_air/`: reusable code. Notebooks import from here instead of copying code: `data` (loading, cleaning, timestamps), `grades`, `episodes`, `station_levels`, `features`, `forecast` (folds, models, alert calibration, evaluation: `run_forecast`), `metrics`, `report` (key figures).
+- `tests/`: pytest for everything in `src/`, plus `test_readme_numbers.py`, which checks every figure of the README's Key results against `reports/metrics/*_key_figures.json`.
+- `reports/figures`, `reports/metrics`: outputs written by the notebooks. Each notebook 01-05 ends by saving its key figures with `save_key_figures`.
+- `data/reference/`: small curated tables with a documented source (station history, Seoul Open API samples).
 - `docs/ANALYSIS_PLAN.md`: the roadmap, phase by phase.
+
+## Commands
+- Use `run.py` (works on Windows without make): `python run.py install | lint | test | notebooks [NN] | all`.
+- `install` uses `constraints.txt`, the exact versions that ran the project (Python 3.10). After changing dependencies, regenerate it from the environment and keep platform markers for Windows-only packages.
+- `run.py` sets one thread per numerical library: the machine has little free memory, and notebooks 01 and 05 failed without it.
+- When a result changes, update the README in the same change: `test_readme_numbers.py` fails otherwise.
 
 ## Rules
 1. **Numbers**: never write a number in markdown that does not appear in an executed output. No placeholders and no values read by eye from charts.
-2. **Verification**: before saying a task is done, run `make test` and re-run the touched notebooks top to bottom in a fresh kernel.
+2. **Verification**: before saying a task is done, run `python run.py lint` and `python run.py test`, and re-run the touched notebooks top to bottom in a fresh kernel (`python run.py notebooks NN`).
 3. **Removing rows**: only with a documented reason and the exact count (use `drop_with_report`).
 4. **Statistics**: pollutant concentrations are right-skewed; report medians and percentiles, not only means.
 5. **Time**: Kaggle timestamps are KST (`Asia/Seoul`) and mark the **start** of each hourly average (07:00 = 07:00-08:00), verified in notebook 01. Official Korean data label the **end** of the hour (1-24 h, or 00:00 of the next day), one hour later: convert with `to_official_label` before joining any official or weather data.

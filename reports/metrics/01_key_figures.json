@@ -1,0 +1,10 @@
+{
+  "dropped_pct": 2.8130281441808194,
+  "filter_check_grade_changes": 83,
+  "filter_check_station_days": 26247,
+  "gap_days": 18,
+  "longest_gap_days": 9,
+  "readings_raw": 3885066,
+  "summary_pm25_above_500": 1063,
+  "valid_city_days": 1077
+}

@@ -1,18 +1,17 @@
-.PHONY: install test lint notebooks all
+.PHONY: install lint test notebooks all
 
+# Thin wrapper around run.py, which also works on Windows without make
 install:
-	pip install -r requirements.txt
-
-test:
-	pytest -q
+	python run.py install
 
 lint:
-	python -m pyflakes src tests
+	python run.py lint
 
-# Execute every notebook in order, in a fresh kernel, and save the outputs
+test:
+	python run.py test
+
 notebooks:
-	for nb in notebooks/[0-9]*.ipynb; do \
-		jupyter nbconvert --to notebook --execute --inplace "$$nb" || exit 1; \
-	done
+	python run.py notebooks
 
-all: lint test notebooks
+all:
+	python run.py all

@@ -15,7 +15,7 @@ Dataset: Kaggle *Air Pollution in Seoul*, hourly, 25 district stations, 2017-201
 | 3 | Can districts be ranked, or do differences depend on the stations? | `03_eda_spatial` | Done |
 | 4 | How do pollutants relate, and when do episodes happen? | `04_pollutants_and_episodes` | Done |
 | 5 | Can next-day PM2.5 be forecast better than "same as today"? | `05_forecasting` | Done (first version) |
-| 6 | What should a citizen or the city take away? | `06_insights_summary` | To do |
+| 6 | What should a citizen or the city take away? | `06_insights_summary` | Done |
 
 Out of scope with this dataset: the effect of the PM seasonal management system (it started in December 2019, when the data ends) and weather drivers (no weather variables).
 
@@ -64,11 +64,13 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 
 ## Phase 5 - Communication (`06`, README, optional app)
 
-- [ ] `06_insights_summary`: 5-7 findings written for a non-technical reader
-- [ ] README key results reviewed after any change to the notebooks
+- [x] `06_insights_summary`: findings, recommendations and limitations for a non-technical reader
+- [x] Forecast code in `src/seoul_air/forecast.py`, with tests
+- [x] `run.py` for Windows without make, `constraints.txt`, MIT license
+- [x] Test that the README figures match `reports/metrics`
 - [ ] Korean summary reviewed by a native speaker if possible
-- [ ] Optional: Streamlit dashboard in `app/` (district selector, seasonal profile, next-day forecast)
-- [ ] Final check: delete `data/processed`, run `make notebooks`, everything runs clean
+- [ ] Optional: Streamlit dashboard (seasonal profile, next-day forecast)
+- [ ] Final check: delete `data/processed`, run `python run.py all`, everything runs clean
 
 ## What makes it stand out to recruiters in Korea
 
