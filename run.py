@@ -3,8 +3,8 @@
     python run.py install        install the pinned dependencies
     python run.py lint           check src, tests, tools and this file with pyflakes
     python run.py test           run the test suite
-    python run.py notebooks      execute every notebook in order, in fresh kernels
-    python run.py notebooks 03   execute from notebook 03 onward
+    python run.py notebooks      execute every notebook in dependency order, in fresh kernels
+    python run.py notebooks 03   execute notebook 03 and every notebook after it in that order
     python run.py all            lint, notebooks, then tests (the full check)
 """
 import os
@@ -13,7 +13,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-NOTEBOOKS = sorted((ROOT / "notebooks").glob("[0-9][0-9]_*.ipynb"))
+# Notebooks are numbered by topic; this is the order their inputs require:
+# 00-01 Kaggle data -> 07 official data 2015-2025 -> 08 weather -> 02-04 analyses
+# of 2015-2025 -> 05 forecast (Kaggle data) -> 06 summary
+ORDER = ["00", "01", "07", "08", "02", "03", "04", "05", "06"]
+NOTEBOOKS = sorted((ROOT / "notebooks").glob("[0-9][0-9]_*.ipynb"), key=lambda p: ORDER.index(p.name[:2]))
 # One thread per numerical library keeps memory low on small machines; results do not change
 ENV = {**os.environ, "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OMP_NUM_THREADS": "2"}
 
@@ -36,9 +40,7 @@ def test():
 
 
 def notebooks(start="00"):
-    for path in NOTEBOOKS:
-        if path.name[:2] < start:
-            continue
+    for path in [p for p in NOTEBOOKS if ORDER.index(p.name[:2]) >= ORDER.index(start)]:
         code = call("jupyter", "nbconvert", "--to", "notebook", "--execute", "--inplace",
                     "--ExecutePreprocessor.timeout=3600", str(path.relative_to(ROOT)))
         if code:

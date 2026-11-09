@@ -1,22 +1,22 @@
-# Seoul Air Quality: When and Where Is the Air Most Harmful?
+# Seoul Air Quality, 2015-2025: Is the Air Getting Better, and for Whom?
 
-End-to-end analysis of hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, SO2) from the 25 district stations of Seoul, 2017-2019: status-based data cleaning, temporal and spatial EDA, pollution episodes, and a next-day PM2.5 forecast evaluated against a persistence baseline on a later year.
+End-to-end analysis of the official hourly air pollution readings (PM2.5, PM10, O3, NO2, CO, SO2) of the 25 urban stations of Seoul from 2015 to 2025, validated against the official statistics and joined with hourly weather: long-term trends with uncertainty, seasons, ozone, the Korean air quality index (CAI), population-weighted exposure, a check of each station's level over time, and a next-day PM2.5 forecast.
 
-> **Status:** complete for the 2017-2019 dataset; the official 2015-2025 data is built and validated (notebook 07) for the next phase. [Notebook 06](notebooks/06_insights_summary.ipynb) summarises the findings for a non-technical reader; [docs/ANALYSIS_PLAN.md](docs/ANALYSIS_PLAN.md) lists the next steps.
+> **Status:** notebooks 02-04 and 06-08 use the official data of 2015-2025. The forecast (notebook 05) still uses the Kaggle data of 2017-2019 and is the next part to move (see [docs/ANALYSIS_PLAN.md](docs/ANALYSIS_PLAN.md)). [Notebook 06](notebooks/06_insights_summary.ipynb) summarises the findings for a non-technical reader.
 
 ## Key results
 
-- **Season matters far more than district, but daily swings matter most.** The calendar month accounts for 23.4% of the station-day variance of PM2.5 and the district for 0.6%; most of the rest is day-to-day change within the same month. The median daily PM2.5 peaks in March (34.4 ug/m3) and is lowest in September (10.7). In March 48.2% of station-days are graded Bad or Very bad, against 0.4% in August.
-- **PM2.5 is a city-wide phenomenon.** Daily PM2.5 correlates at 0.90 or more between any two districts, and the date accounts for 94.3% of the station-day variance.
-- **Districts cannot be ranked reliably.** The order of the district medians changes from year to year (Spearman 0.12-0.22), and a station's offset from the rest of the city moves by more over time (typically 6.4 ug/m3) than the gap between the highest and lowest medians (4.7). Four stations were relocated in 2018 and 9 are not comparable across the period; only 5 of 25 keep a consistent difference. Instrument effects are possible but cannot be confirmed: official records give only the year of each change.
-- **No detectable trend in 3 years.** The mean station-day PM2.5 was 24.6, 22.8 and 24.9 ug/m3, above the Korean annual standard (15) every year; 48 multi-day Bad episodes were found, almost all in winter and spring.
-- **Next-day forecast.** A Ridge model chosen on four quarterly validation folds of 2018 has a 2019 MAE 10.0% lower than "tomorrow = today" (7.97 vs 8.86 ug/m3; 95% interval of the gain 4.3% to 15.6%, resampling weeks). As an alert for Bad days it misses more of them than persistence with the grade rule (recall 0.53 vs 0.61); with a threshold calibrated on 2018 (29 ug/m3) its recall rises to 0.76, no longer distinguishable from persistence. 2019 had been inspected before, so these are not untouched test results (see below).
-- **Data quality.** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file carry such a flag. The filter does not hide real peaks: restoring the flagged readings that look real changes the grade of 83 of 26,247 station-days. The Kaggle file has no daily value on 18 days of 2019, including 9 in a row after the largest episode, so the analysis uses 1,077 valid days; the official file has those days (notebook 07).
-
-- **Weather 2015-2025.** Hourly ERA5 weather (wind, rain, humidity, temperature, boundary layer height) is joined to every station-day; it follows the Seoul station closely for temperature (correlation 0.993) and less for wind speed (0.671). Same-day associations with city PM2.5 are strongest for the boundary layer height (Spearman -0.39) and wind speed (-0.29). Observed weather is used for analysis only, never as known in advance in a forecast.
+- **PM2.5 fell by about a third, and the decline is robust.** The mean station-day PM2.5 went from 26.2 ug/m3 in 2016 to 17.5 in 2024 (18.5 in 2025), still above the Korean annual standard of 15. The deseasonalised trend is -3.53% per year (95% interval -4.54% to -2.52%, block bootstrap of 12-month blocks), and all 25 stations decline. NO2 (-6.13% a year) and SO2 (-7.72%) fall faster.
+- **Ozone is the growing problem.** O3 rises by 3.85% a year (interval 3.10% to 4.62%). Station-days above the 8-hour ozone standard went from 10.6% in 2015 to 27.2% in 2024, and ozone now sets the Korean air quality index (CAI) in 46.5% of the station-hours of 2025, against 17.2% in 2015.
+- **Season and day matter far more than district.** The day accounts for 94.4% of the variance of station-day PM2.5, the calendar month for 15.7% and the district for 0.3%. The median daily PM2.5 peaks in March (27.0 ug/m3) and is lowest in September (10.2); in March 31.9% of station-days are graded Bad or Very bad, against 1.9% in August. Multi-day Bad episodes fell from 18 in 2016 to 6 in 2024.
+- **Districts cannot be ranked reliably.** The district medians are within 2.5 ug/m3 of each other and their order changes from year to year (Spearman between years: median 0.19). 11 of the 25 stations were relocated or show a level shift, and only 4 keep a consistent difference from the rest of the city. Weighting by the official district population changes the city's PM2.5 by at most 0.165 ug/m3.
+- **Roadside air is worse for NO2.** The project's stations are all urban; the 15 roadside stations of Seoul recorded 41.2% more NO2 than the urban ones in 2024.
 - **Official data 2015-2025 reproduces the official statistics.** The extended series built from the Seoul Open Data Plaza matches 86.4% of 66 official station-year means exactly after rounding and 98.5% within 1 ug/m3; its whole-Seoul PM2.5 mean for 2024 is 17.55 ug/m3 against the official 17.6. For PM, the provisional files equal the AirKorea final data of 2024.
+- **Weather 2015-2025.** Hourly ERA5 weather (wind, rain, humidity, temperature, boundary layer height) is joined to every station-day; it follows the Seoul station closely for temperature (correlation 0.993) and less for wind speed (0.671). Same-day associations with city PM2.5 are strongest for the boundary layer height (Spearman -0.39) and wind speed (-0.29). Observed weather is used for analysis only, never as known in advance in a forecast.
+- **Next-day forecast (Kaggle data, 2017-2019).** A Ridge model chosen on four quarterly validation folds of 2018 has a 2019 MAE 10.0% lower than "tomorrow = today" (7.97 vs 8.86 ug/m3; 95% interval of the gain 4.3% to 15.6%, resampling weeks). As an alert for Bad days it misses more of them than persistence with the grade rule (recall 0.53 vs 0.61); with a threshold calibrated on 2018 (29 ug/m3) its recall rises to 0.76, no longer distinguishable from persistence. 2019 had been inspected before, so these are not untouched test results (see below).
+- **Data quality (Kaggle files, notebook 01).** 2.81% of the readings carry a non-normal instrument status and were dropped; all 1,063 PM2.5 readings above 500 ug/m3 in the ready-made summary file carry such a flag. The filter does not hide real peaks: restoring the flagged readings that look real changes the grade of 83 of 26,247 station-days. The Kaggle file has no daily value on 18 days of 2019, including 9 in a row after the largest episode, so the analysis uses 1,077 valid days; the official file has those days (notebook 07).
 
-![Daily PM2.5 and PM10](reports/figures/02_daily_series.png)
+![Monthly anomalies and long-term trends](reports/figures/02_long_term_trend.png)
 
 ## Business question
 
@@ -36,9 +36,9 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 |---|---|
 | [00 Data acquisition](notebooks/00_data_acquisition.ipynb) | Download and file inventory |
 | [01 Data cleaning](notebooks/01_data_cleaning.ipynb) | Instrument-status filter, complete hourly grid, daily means (18 of 24 hours), Korean PM grades |
-| [02 Temporal EDA](notebooks/02_eda_temporal.ipynb) | Annual level vs Korean and WHO references, seasonality, weekday and hourly cycles |
-| [03 Spatial EDA](notebooks/03_eda_spatial.ipynb) | Variance decomposition, station offsets over time, official relocations and equipment changes, level shifts, comparison of stations with intervals instead of a ranking |
-| [04 Pollutants and episodes](notebooks/04_pollutants_and_episodes.ipynb) | Pollutant correlations, PM vs ozone seasons, multi-day episodes, coarse-dust days |
+| [02 Temporal analysis](notebooks/02_eda_temporal.ipynb) | 2015-2025: annual levels, long-term trends with block-bootstrap intervals (all pollutants and each station), seasons, weekday and hourly cycles, ozone against the Korean standards |
+| [03 Spatial analysis](notebooks/03_eda_spatial.ipynb) | 2015-2025: variance decomposition, station offsets over time, official relocations and equipment changes, level shifts, comparison of stations with intervals instead of a ranking, population-weighted exposure, roadside vs urban stations |
+| [04 Pollutants, episodes and CAI](notebooks/04_pollutants_and_episodes.ipynb) | 2015-2025: pollutant correlations, PM vs ozone seasons, multi-day episodes, coarse-dust days, the Korean CAI and the pollutant that sets it |
 | [05 Forecasting](notebooks/05_forecasting.ipynb) | Next-day PM2.5 per district: baselines, Ridge, gradient boosting, alert threshold calibrated on validation, weekly block bootstrap |
 | [06 Insights summary](notebooks/06_insights_summary.ipynb) | Findings, recommendations and limitations for a non-technical reader |
 | [07 Extended data](notebooks/07_data_2015_2025.ipynb) | Official Seoul data 2015-2025: source comparison, loading, validation against official annual means |
@@ -51,7 +51,7 @@ When and where is Seoul's air most harmful, and can tomorrow's PM2.5 level be pr
 ## Limitations
 
 - Notebooks 00-06 use no weather data. Hourly weather for 2015-2025 is now available (notebook 08), from a reanalysis at one grid point; its boundary layer height is missing for the first half of 2024.
-- Three years only: too short to separate a trend from year-to-year variation, and the seasonal management system introduced in December 2019 cannot be evaluated.
+- Trends are not adjusted for weather, and describe 2015-2025 rather than explain it: they include the COVID-19 period and the PM seasonal management system (from December 2019), whose effects are not separated yet. The forecast still uses three Kaggle years.
 - One station per district; some district-months are largely missing (for example Gwanak-gu, September 2019).
 - Station levels are not fully comparable over time. The official history gives the year of relocations and equipment replacements, not the month or the instrument, so the cause of a level shift, such as those of Yeongdeungpo-gu, cannot be confirmed.
 - In the Kaggle file, 18 days of 2019 have no valid value for any station, among them 2019-03-09 to 2019-03-17 (the official file has them). They are left missing, the evaluation year covers 347 of 365 days, and a likely 3-day episode in May 2019 is split by one of these gaps.
@@ -87,7 +87,7 @@ Single steps: `python run.py lint`, `python run.py test`, `python run.py noteboo
 
 ## 한국어 요약
 
-서울시 25개 자치구 측정소의 2017~2019년 시간별 대기오염 데이터(PM2.5, PM10, O3, NO2, CO, SO2)를 분석한 프로젝트입니다. 측정기 상태 코드를 이용해 이상값을 제거하고, 계절·요일·시간대별 패턴, 자치구 간 차이, 고농도 에피소드를 분석했습니다. 초미세먼지(PM2.5)는 3월에 가장 높고 9월에 가장 낮습니다. 전체 분산 중 달력 월이 차지하는 비중은 23.4%, 자치구는 0.6%이며, 나머지 대부분은 같은 달 안에서 나타나는 일별 변동입니다. 3년 데이터로는 뚜렷한 추세를 확인할 수 없습니다. 측정소 이전과 장비 교체의 영향을 배제할 수 없어 자치구 순위는 신뢰하기 어렵습니다. 다음 날 PM2.5 예측 모델(Ridge)은 2019년 평가에서 "내일 = 오늘" 기준 모델보다 평균 절대 오차(MAE)를 10.0% 줄였습니다. 다만 2019년 결과는 이전 분석에서 이미 확인되었으므로 완전히 독립적인 테스트로 볼 수 없습니다.
+서울시 25개 도시대기측정소의 2015~2025년 공식 시간별 대기오염 자료(PM2.5, PM10, O3, NO2, CO, SO2)를 분석한 프로젝트입니다. 자료는 서울 열린데이터광장에서 내려받아 서울시 공식 연평균과 대조해 검증했고(2024년 PM2.5: 17.55 대 공식 17.6㎍/㎥), 시간별 기상자료(ERA5)와 결합했습니다. 초미세먼지(PM2.5)는 연 3.53%씩 감소했고(95% 구간 2.52~4.54%), 25개 측정소 모두에서 감소했습니다. 반면 오존은 연 3.85%씩 증가해, 8시간 기준을 넘은 측정소-일의 비율이 2015년 10.6%에서 2024년 27.2%로 늘었고, 2025년에는 통합대기환경지수(CAI)를 결정하는 물질 중 오존의 비중이 46.5%로 가장 컸습니다. 전체 분산 중 날짜가 차지하는 비중은 94.4%, 자치구는 0.3%이며, 측정소 이전과 장비 교체의 영향을 배제할 수 없어 자치구 순위는 신뢰하기 어렵습니다. 인구 가중 노출은 단순 평균과 거의 같았습니다. 다음 날 PM2.5 예측 모델(Ridge, 2017~2019년 Kaggle 자료)은 "내일 = 오늘" 기준 모델보다 평균 절대 오차(MAE)를 10.0% 줄였습니다.
 
 ## Tech stack
 

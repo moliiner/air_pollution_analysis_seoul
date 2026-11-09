@@ -89,6 +89,17 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [ ] Fill the boundary layer height of 2024-01 to 2024-06 from the Copernicus Climate Data Store (needs an account)
 - [ ] Optional: official KMA ASOS data with a personal key
 
+## Phase 8 - Analyses on 2015-2025 (`02`, `03`, `04`)
+
+- [x] Temporal, spatial and episode analyses moved to the official data of 2015-2025
+- [x] Long-term trends with block-bootstrap intervals, for the city and each station
+- [x] Ozone against the Korean 8-hour and 1-hour standards
+- [x] Korean CAI, including the pollutant that sets it
+- [x] Population-weighted exposure with the official district population
+- [x] Roadside stations identified and kept apart (2024 comparison)
+- [ ] Weather-adjusted trend and evaluation of the PM seasonal management system
+- [ ] Forecast on the 2015-2025 data (notebook 05 still uses the Kaggle data)
+
 ## What makes it stand out to recruiters in Korea
 
 - **A clear question with a local angle**: 미세먼지 (fine dust) is a daily topic in Korea; recruiters understand the problem immediately.

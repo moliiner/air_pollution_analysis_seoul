@@ -9,7 +9,6 @@ from seoul_air import config
 from seoul_air.report import load_key_figures
 
 README = (config.ROOT / "README.md").read_text(encoding="utf-8")
-NUMBER_WORDS = {4: "Four", 5: "Five", 9: "nine"}
 
 
 @pytest.fixture(scope="module")
@@ -30,34 +29,47 @@ def test_data_quality(k):
     quoted(f"the analysis uses {f['valid_city_days']:,} valid days")
 
 
-def test_seasons_and_level(k):
-    month, bad, year = (k["02"][key] for key in ["pm25_median_by_month", "bad_or_worse_pct_by_month", "pm25_mean_by_year"])
+def test_level_and_trend(k):
+    f = k["02"]
+    year = f["pm25_mean_by_year"]
+    quoted(f"from {year['2016']:.1f} ug/m3 in 2016 to {year['2024']:.1f} in 2024 ({year['2025']:.1f} in 2025)")
+    pm25 = f["trend"]["pm25"]
+    quoted(f"trend is {pm25['pct_per_year']:.2f}% per year (95% interval {pm25['pct_low_95']:.2f}% "
+           f"to {pm25['pct_high_95']:.2f}%")
+    quoted(f"and all {f['stations_with_significant_pm25_decline']} stations decline")
+    assert f["stations_with_significant_pm25_decline"] == 25
+    quoted(f"NO2 ({f['trend']['no2']['pct_per_year']:.2f}% a year) and SO2 ({f['trend']['so2']['pct_per_year']:.2f}%)")
+    o3 = f["trend"]["o3"]
+    quoted(f"O3 rises by {o3['pct_per_year']:.2f}% a year (interval {o3['pct_low_95']:.2f}% to {o3['pct_high_95']:.2f}%)")
+    above = f["o3_above_8h_pct_by_year"]
+    quoted(f"from {above['2015']:.1f}% in 2015 to {above['2024']:.1f}% in 2024")
+    main = k["04"]["cai_main_pollutant_pct_by_year"]
+    quoted(f"in {main['2025']['o3']:.1f}% of the station-hours of 2025, against {main['2015']['o3']:.1f}% in 2015")
+    quoted(f"연 {abs(pm25['pct_per_year']):.2f}%씩 감소")
+    quoted(f"오존은 연 {o3['pct_per_year']:.2f}%씩 증가")
+
+
+def test_seasons(k):
+    month, bad = k["02"]["pm25_median_by_month"], k["02"]["bad_or_worse_pct_by_month"]
     quoted(f"peaks in March ({month['3']:.1f} ug/m3) and is lowest in September ({month['9']:.1f})")
-    quoted(f"In March {bad['3']:.1f}% of station-days are graded Bad or Very bad, against {bad['8']:.1f}% in August")
-    quoted(f"The mean station-day PM2.5 was {year['2017']:.1f}, {year['2018']:.1f} and {year['2019']:.1f} ug/m3")
+    quoted(f"in March {bad['3']:.1f}% of station-days are graded Bad or Very bad, against {bad['8']:.1f}% in August")
+    episodes = k["04"]["episodes_by_year"]
+    quoted(f"episodes fell from {episodes['2016']} in 2016 to {episodes['2024']} in 2024")
 
 
-def test_variance_and_districts(k):
+def test_districts_exposure_and_roadside(k):
     f = k["03"]
     share = f["variance_share_pct"]
-    quoted(f"The calendar month accounts for {share['Calendar month (season)']:.1f}% of the station-day variance "
-           f"of PM2.5 and the district for {share['District']:.1f}%")
-    quoted(f"the date accounts for {share['Date (each single day)']:.1f}% of the station-day variance")
-    quoted(f"correlates at {f['min_pairwise_correlation']:.2f} or more")
-    low, high = f["spearman_between_years"]
-    quoted(f"(Spearman {low:.2f}-{high:.2f})")
-    quoted(f"(typically {f['median_quarterly_offset_range']:.1f} ug/m3)")
-    quoted(f"the highest and lowest medians ({f['median_gap_between_district_medians']:.1f})")
-    quoted(f"{NUMBER_WORDS[f['relocated_2017_2019']]} stations were relocated in 2018")
+    quoted(f"The day accounts for {share['Date (each single day)']:.1f}% of the variance of station-day PM2.5, "
+           f"the calendar month for {share['Calendar month (season)']:.1f}% and the district for {share['District']:.1f}%")
+    quoted(f"within {f['median_gap_between_district_medians']:.1f} ug/m3 of each other")
+    quoted(f"(Spearman between years: median {f['spearman_between_years'][1]:.2f})")
     groups = f["categories"]
     consistent = groups.get("Above the rest of the city", 0) + groups.get("Below the rest of the city", 0)
-    quoted(f"{groups['Not comparable']} are not comparable across the period; only {consistent} of 25")
-    korean = f"달력 월이 차지하는 비중은 {share['Calendar month (season)']:.1f}%, 자치구는 {share['District']:.1f}%"
-    quoted(korean)
-
-
-def test_episodes(k):
-    quoted(f"{k['04']['episodes_2plus_days']} multi-day Bad episodes")
+    quoted(f"{groups['Not comparable']} of the 25 stations were relocated or show a level shift, and only {consistent} keep")
+    quoted(f"by at most {f['exposure_pm25_max_abs_difference']:.3f} ug/m3")
+    quoted(f"the {f['roadside_stations']} roadside stations of Seoul recorded {f['roadside_vs_urban_pct_2024']['no2']:.1f}% more NO2")
+    quoted(f"날짜가 차지하는 비중은 {share['Date (each single day)']:.1f}%, 자치구는 {share['District']:.1f}%")
 
 
 def test_forecast(k):
@@ -88,6 +100,8 @@ def test_extended_data(k):
            f"exactly after rounding and {f['station_within_1_pct']:.1f}% within 1 ug/m3")
     quoted(f"its whole-Seoul PM2.5 mean for 2024 is {f['city_pm25_by_year']['2024']:.2f} ug/m3 "
            f"against the official {f['city_official']['2024_pm25']:g}")
+    quoted(f"서울시 공식 연평균과 대조해 검증했고(2024년 PM2.5: {f['city_pm25_by_year']['2024']:.2f} 대 공식 "
+           f"{f['city_official']['2024_pm25']:g}")
 
 
 def test_weather(k):

@@ -117,3 +117,11 @@ The official KMA station data (data.kma.go.kr, KMA API Hub, data.go.kr) needs a 
 | `weather_daily_2015_2025.parquet` | KST day |
 | `air_weather_daily_2015_2025.parquet` | station-day of `air_daily_2015_2025` with the weather of the same day |
 
+## Population, stations by network, CAI (notebooks 02-04)
+
+| Data | Source | Notes |
+|---|---|---|
+| District population, end of each year 2015-2025 | Ministry of the Interior and Safety, resident registration statistics ([jumin.mois.go.kr](https://jumin.mois.go.kr/statMonth.do)), downloaded by `seoul_air.population.download_population()` into `data/raw/population/` | Monthly CSV of every Korean district (CP949); December is used. The loader checks that the 25 districts add up to the Seoul total. Registered residents (거주자, 거주불명자, 재외국민), not foreigners. |
+| `reference/seoul_stations_by_network_2024.csv` | AirKorea final data 2024, made by `tools/seoul_networks_2024.py` | Annual means of the 40 Seoul stations: 25 urban (도시대기, the project's stations) and 15 roadside (도로변대기). |
+| CAI breakpoints and rules | [Seoul Metropolitan Government](https://cleanair.seoul.go.kr/information/info3), [AirKorea](https://www.airkorea.or.kr/eng/khaiInfo?pMENU_NO=166) | Implemented in `seoul_air.cai`; the O3 scale ends at 0.6 ppm (the Kaggle item file shows 0.5). |
+

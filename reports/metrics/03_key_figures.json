@@ -1,22 +1,32 @@
 {
   "categories": {
-    "Above the rest of the city": 1,
-    "Below the rest of the city": 4,
-    "No consistent difference": 11,
-    "Not comparable": 9
+    "Above the rest of the city": 2,
+    "Below the rest of the city": 2,
+    "No consistent difference": 10,
+    "Not comparable": 11
   },
-  "median_gap_between_district_medians": 4.736413043478262,
-  "median_quarterly_offset_range": 6.361059155216761,
-  "min_pairwise_correlation": 0.9003660743013423,
-  "relocated_2017_2019": 4,
+  "exposure_pm25_max_abs_difference": 0.16502951704888602,
+  "median_gap_between_district_medians": 2.492753623188406,
+  "median_yearly_offset_range": 3.362269041345126,
+  "min_pairwise_correlation": 0.9110065135783199,
+  "pm25_shifts": 13,
+  "roadside_stations": 15,
+  "roadside_vs_urban_pct_2024": {
+    "no2": 41.21640509690074,
+    "o3": -20.84909607102886,
+    "pm10": 10.93763714752274,
+    "pm25": 2.296897278887311
+  },
   "spearman_between_years": [
-    0.11542901115813775,
-    0.21512411404597878
+    -0.3743747872346499,
+    0.18769230769230769,
+    0.7936876870666204
   ],
   "variance_share_pct": {
-    "Calendar month (season)": 23.38996909246798,
-    "Date (each single day)": 94.28442060027871,
-    "District": 0.6219841833263628,
-    "Month of each specific year": 27.110958018850617
+    "Calendar month (season)": 15.674215514061974,
+    "Date (each single day)": 94.35557884338985,
+    "District": 0.29535568007851287,
+    "Month of each specific year": 24.914674639553347,
+    "Year": 4.169594208548122
   }
 }

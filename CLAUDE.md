@@ -12,15 +12,17 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 - `Measurement_info.csv` is the source used: it has the instrument status (only 0 = normal is valid). `Measurement_summary.csv` has no status and keeps instrument errors (PM2.5 above 500 ug/m3); do not use it for analysis.
 - Units: PM10 and PM2.5 in ug/m3; SO2, NO2, CO and O3 in ppm.
 - Weather (`seoul_air.weather`): ERA5 at one grid point, UTC converted to start-of-hour KST; precipitation of hour h is the ERA5 total reported at h+1. The boundary layer height is missing for 2024-01 to 2024-06. **Observed weather never enters a forecast for its own day**: use `weather_known_at_issue` (issue day and earlier) or a weather forecast.
+- The 25 stations are all urban (도시대기). Seoul's 15 roadside stations (도로변대기) are only in the AirKorea final data; `reference/seoul_stations_by_network_2024.csv` has their 2024 means. Keep the two networks apart.
+- CAI: official definition in `seoul_air.cai` (PM uses the 24-hour predicted moving average; +50 / +75 bonus). A daily CAI in this project is the highest hourly CAI of the day, not an official daily statistic.
 - A district value is the value of one station, and stations change: four were relocated in 2018 and most had equipment replaced in 2018-2019 (`data/reference/station_history.csv`, years only). Do not present a ranking of districts; compare stations on the same days, with intervals (notebook 03).
 - 18 days of 2019 have no valid value for any station, so 1,077 of the 1,095 days are valid: use 1,077 as the denominator of city-day shares, leave the gaps missing and do not draw lines across them (see `reports/metrics/01_network_gap_days.csv`).
 
 ## Layout
-- `notebooks/00`-`06`: the analysis of the Kaggle data, run in order. Notebook 01 writes `data/processed`, which the later notebooks read. Notebook 06 is the plain-language summary.
+- Notebooks are numbered by topic; `run.py` runs them in dependency order: 00-01 (Kaggle data, cleaning and timestamp checks) -> 07 (official data 2015-2025) -> 08 (weather) -> 02-04 (analyses of 2015-2025) -> 05 (forecast, still on the Kaggle data) -> 06 (plain-language summary).
 - `notebooks/07`: builds and validates the extended 2015-2025 data from the official Seoul files.
 - `notebooks/08`: hourly weather 2015-2025 (ERA5 via Open-Meteo, checked against the Seoul station) joined with the pollution data.
 - `tools/`: one-off checks outside the pipeline (`compare_airkorea_final.py` needs `python-calamine` and a 400 MB download).
-- `src/seoul_air/`: reusable code. Notebooks import from here instead of copying code: `data` (loading, cleaning, timestamps), `grades`, `episodes`, `station_levels`, `features`, `forecast` (folds, models, alert calibration, evaluation: `run_forecast`), `metrics`, `report` (key figures).
+- `src/seoul_air/`: reusable code. Notebooks import from here instead of copying code: `data` (loading, cleaning, timestamps), `grades`, `episodes`, `station_levels`, `features`, `forecast` (folds, models, alert calibration, evaluation: `run_forecast`), `metrics`, `report` (key figures), `sources` (official Seoul files), `weather`, `trend` (Theil-Sen slope with a block-bootstrap interval), `ozone` (8-hour means, standards), `cai` (official Korean index), `population` (MOIS district population, weighted means).
 - `tests/`: pytest for everything in `src/`, plus `test_readme_numbers.py`, which checks every figure of the README's Key results against `reports/metrics/*_key_figures.json`.
 - `reports/figures`, `reports/metrics`: outputs written by the notebooks. Each notebook 01-05 ends by saving its key figures with `save_key_figures`.
 - `data/reference/`: small curated tables with a documented source (station history, Seoul Open API samples).
