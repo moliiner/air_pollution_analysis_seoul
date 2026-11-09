@@ -1,10 +1,17 @@
 {
-  "test_year": 2019,
+  "evaluation_year": 2019,
+  "inspected_before": true,
   "mae": 7.970105499085755,
   "rmse": 11.828532648043208,
   "bias": -1.0890732474522813,
   "grade_accuracy": 0.6528522091223056,
-  "bad_precision": 0.7016337059329321,
-  "bad_recall": 0.5396825396825397,
-  "bad_f1": 0.6100934579439251
+  "bad_precision": 0.703770197486535,
+  "bad_recall": 0.5336963921034718,
+  "bad_f1": 0.6070460704607046,
+  "calibrated_alert": {
+    "threshold": 29.0,
+    "bad_precision": 0.5484029484029485,
+    "bad_recall": 0.7597004765146358,
+    "bad_f1": 0.636986301369863
+  }
 }

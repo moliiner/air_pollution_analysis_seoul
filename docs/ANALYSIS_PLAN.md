@@ -54,7 +54,11 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 
 - [x] Leakage-safe features and strict temporal split (fit 2017-2018, test 2019)
 - [x] Baselines (persistence, climatology), Ridge, gradient boosting; choice on validation folds
-- [ ] Improve the Bad-day recall: lower decision threshold chosen on the validation folds, or a classifier for "Bad or worse"
+- [x] Validate on four quarterly origins of 2018, including the first quarter
+- [x] Same rounding for grades and alerts; alert threshold calibrated on validation
+- [x] Weekly block bootstrap intervals for MAE and recall against persistence
+- [ ] A clean test on data from 2020 onward (2019 has been inspected)
+- [ ] Optional: a classifier for "Bad or worse"
 - [ ] Add KMA weather observations (wind speed and direction, rain, humidity) as features
 - [ ] Optional: hourly forecast for the next 24 hours
 

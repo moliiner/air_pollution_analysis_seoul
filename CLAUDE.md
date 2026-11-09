@@ -26,7 +26,7 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 3. **Removing rows**: only with a documented reason and the exact count (use `drop_with_report`).
 4. **Statistics**: pollutant concentrations are right-skewed; report medians and percentiles, not only means.
 5. **Time**: Kaggle timestamps are KST (`Asia/Seoul`) and mark the **start** of each hourly average (07:00 = 07:00-08:00), verified in notebook 01. Official Korean data label the **end** of the hour (1-24 h, or 00:00 of the next day), one hour later: convert with `to_official_label` before joining any official or weather data.
-6. **Modeling**: strict temporal split (never random); no feature may use information from after the prediction time; always compare to a persistence baseline.
+6. **Modeling**: strict temporal split (never random); no feature may use information from after the prediction time; always compare to a persistence baseline. Settings, model choice and alert thresholds come only from the 2018 validation folds (four quarterly origins). 2019 has already been inspected: never use it to choose anything, and call it an evaluation after inspection, not an untouched test. A Bad-or-worse day is `is_bad` (rounded mean above 35), the same rule as the grade.
 7. **Causality**: describe associations (seasons, pollutants, districts); do not claim causes the data cannot show.
 8. **Order**: an "Interpretation" markdown goes after the code cell it interprets. Neutral analytical voice, no second person.
 9. **Safety**: never edit `data/raw`. No personal paths (`C:\Users\...`) in notebooks. Do not commit or push unless explicitly asked. API keys only in `.env`.

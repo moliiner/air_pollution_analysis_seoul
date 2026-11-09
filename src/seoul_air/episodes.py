@@ -1,7 +1,7 @@
 """Runs of consecutive days: network gaps and multi-day pollution episodes."""
 import pandas as pd
 
-from seoul_air.metrics import BAD_THRESHOLD_PM25
+from seoul_air.metrics import is_bad
 
 
 def find_runs(flags):
@@ -19,8 +19,7 @@ def find_episodes(city_pm25):
     Missing days never count as Bad, so a gap ends a run. gap_before and gap_after
     mark the runs next to a missing day, whose true length is unknown.
     """
-    is_bad = city_pm25.round() > BAD_THRESHOLD_PM25
-    runs = find_runs(is_bad)
+    runs = find_runs(pd.Series(is_bad(city_pm25), index=city_pm25.index))
     one_day = pd.Timedelta(days=1)
     gaps = city_pm25.index[city_pm25.isna()]
     values = [city_pm25.loc[r.start:r.end] for r in runs.itertuples()]
