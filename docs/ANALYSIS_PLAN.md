@@ -69,8 +69,9 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [x] `run.py` for Windows without make, `constraints.txt`, MIT license
 - [x] Test that the README figures match `reports/metrics`
 - [ ] Korean summary reviewed by a native speaker if possible
-- [ ] Optional: Streamlit dashboard (seasonal profile, next-day forecast)
-- [ ] Final check: delete `data/processed`, run `python run.py all`, everything runs clean
+- [x] Streamlit dashboard reading `reports/` (key results, 1-3 day forecast, outlook), tested in CI
+- [x] Executive summary and key figure in the README, model card (`docs/MODEL_CARD.md`)
+- [x] Final check: empty `data/processed`, run `python run.py all`, everything runs clean
 
 ## Phase 6 - Extended data, 2015-2025 (`07`)
 

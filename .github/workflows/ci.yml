@@ -15,6 +15,8 @@ jobs:
           cache: pip
       - name: Install the pinned dependencies
         run: python run.py install
+      - name: Install the dashboard dependencies, for its test
+        run: pip install -r requirements-app.txt -c constraints.txt
       - name: Lint (unused imports and names)
         run: python run.py lint
       - name: Run the test suite, including the README figures (notebooks are not executed in CI)

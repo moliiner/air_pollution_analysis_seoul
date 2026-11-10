@@ -26,16 +26,18 @@ Portfolio project: analysis of air pollution (PM2.5, PM10, O3, NO2) in the 25 di
 - `notebooks/11`: outlook for 2026-2028 (`longterm`): five monthly models, rolling origins every 6 months from 2018-01 up to 36 months, model chosen by `longterm.SELECTION_RULE` (fixed in advance, do not change it after seeing results), labelled scenarios; no shocks anticipated.
 - `tools/`: one-off checks outside the pipeline (`compare_airkorea_final.py` needs `python-calamine` and a 400 MB download).
 - `src/seoul_air/`: reusable code. Notebooks import from here instead of copying code: `data` (loading, cleaning, timestamps), `grades`, `episodes`, `station_levels`, `features`, `forecast` (folds, models, alert calibration, evaluation: `run_forecast`), `metrics`, `report` (key figures), `sources` (official Seoul files), `weather`, `trend` (Theil-Sen slope with a block-bootstrap interval), `ozone` (8-hour means, standards), `cai` (official Korean index), `population` (MOIS district population, weighted means), `deweather` (weather normalisation), `policy` (season comparisons), `multiday` (issue-time features, origins, scores), `nwp` (archived JMA forecasts), `regional` (AirKorea background stations, CAMS), `longterm` (monthly models, selection rule, scenarios, Bad days).
-- `tests/`: pytest for everything in `src/`, plus `test_readme_numbers.py`, which checks every figure of the README's Key results against `reports/metrics/*_key_figures.json`.
+- `tests/`: pytest for everything in `src/`, plus `test_readme_numbers.py`, which checks every figure of the README (executive summary, Key results, Korean summary) and of `docs/MODEL_CARD.md` against `reports/metrics/*_key_figures.json`, and `test_app.py` (the dashboard; skipped where Streamlit is not installed, run in CI).
 - `reports/figures`, `reports/metrics`: outputs written by the notebooks. Each notebook 01-05 ends by saving its key figures with `save_key_figures`.
 - `data/reference/`: small curated tables with a documented source (station history, Seoul Open API samples).
-- `docs/ANALYSIS_PLAN.md`: the roadmap, phase by phase.
+- `docs/ANALYSIS_PLAN.md`: the roadmap, phase by phase. `docs/MODEL_CARD.md`: the forecasts of notebooks 10 and 11.
+- `app/streamlit_app.py`: dashboard that reads only `reports/` (`requirements-app.txt`, not part of `constraints.txt`).
+- `notebooks/06`: plain-language summary of every notebook; it writes `reports/figures/06_key_figure.png`, the figure of the README.
 
 ## Commands
 - Use `run.py` (works on Windows without make): `python run.py install | lint | test | notebooks [NN] | all`.
 - `install` uses `constraints.txt`, the exact versions that ran the project (Python 3.10). After changing dependencies, regenerate it from the environment and keep platform markers for Windows-only packages.
 - `run.py` sets one thread per numerical library: the machine has little free memory, and notebooks 01 and 05 failed without it.
-- When a result changes, update the README in the same change: `test_readme_numbers.py` fails otherwise.
+- When a result changes, update the README, notebook 06 and the model card in the same change: `test_readme_numbers.py` fails otherwise.
 
 ## Rules
 1. **Numbers**: never write a number in markdown that does not appear in an executed output. No placeholders and no values read by eye from charts.

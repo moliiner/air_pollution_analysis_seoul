@@ -167,3 +167,60 @@ def test_long_term_outlook(k):
     continues = max(f["outlook"][f"scenario A: decline continues | {y}"]["p_meets_15"] for y in (2026, 2027, 2028))
     quoted(f"it stays at most {continues:.2f}")
     quoted(f"2026년 {y2026['p_meets_15']:.2f}, 2028년 {y2028['p_meets_15']:.2f}")
+
+
+def test_executive_summary(k):
+    year, pm25 = k["02"]["pm25_mean_by_year"], k["02"]["trend"]["pm25"]
+    normalised = k["09"]["trend"]["weather-normalised"]
+    outlook = k["11"]["outlook"]
+    quoted(f"from {year['2016']:.1f} ug/m3 in 2016 to {year['2024']:.1f} in 2024, a trend of "
+           f"{pm25['pct_per_year']:.2f}% per year that holds once the weather is removed "
+           f"({normalised['pct_per_year']:.2f}% per year)")
+    quoted(f"the forecast annual mean is {outlook['forecast: ETS | 2026']['annual_median']:.2f} ug/m3 in 2026, "
+           f"with a chance of meeting the standard of {outlook['forecast: ETS | 2026']['p_meets_15']:.2f} in 2026 "
+           f"and {outlook['forecast: ETS | 2028']['p_meets_15']:.2f} in 2028")
+    quoted(f"sets the air quality index in {k['04']['cai_main_pollutant_pct_by_year']['2025']['o3']:.1f}% "
+           f"of the station-hours of 2025")
+    quoted(f"cuts the next-day error by {k['10']['skill']['D+1 | persistence']['skill_pct']:.1f}% against persistence")
+
+
+MODEL_CARD = (config.ROOT / "docs" / "MODEL_CARD.md").read_text(encoding="utf-8")
+
+
+def in_card(text):
+    assert text in MODEL_CARD, f"MODEL_CARD.md does not contain: {text!r}"
+
+
+def test_model_card(k):
+    f = k["10"]
+    chosen = "chosen: ridge, alpha 10, + Baengnyeong + JMA forecast"
+    thresholds = f["classifier_thresholds"]
+    in_card(f"({thresholds['1']:.2f} at D+1, {thresholds['2']:.2f} at D+2, {thresholds['3']:.2f} at D+3)")
+    for h in (1, 2, 3):
+        s = f["test_scores"][f"D+{h} | {chosen}"]
+        p = f["test_scores"][f"D+{h} | persistence"]
+        sk, sc = f["skill"][f"D+{h} | persistence"], f["skill"][f"D+{h} | climatology"]
+        in_card(f"| D+{h} | {s['mae']:.3f} | {p['mae']:.3f} | {sk['skill_pct']:.1f}% ({sk['low_95_pct']:.1f}% to "
+                f"{sk['high_95_pct']:.1f}%) | {sc['skill_pct']:.1f}% | {s['grade_accuracy']:.3f} |")
+    without = [f["test_scores"][f"D+{h} | same model, + Baengnyeong"]["mae"] for h in (1, 2, 3)]
+    in_card(f"test MAE of {without[0]:.3f}, {without[1]:.3f} and {without[2]:.3f}")
+    c, p, q = (f["alerts"][f"D+1 | {name}"] for name in
+               (f"classifier (p >= {thresholds['1']:.2f})", "persistence (grade rule)", "90th percentile above 35"))
+    in_card(f"POD of {c['pod']:.3f} and a FAR of {c['far']:.3f} (CSI {c['csi']:.3f}); persistence {p['pod']:.3f} "
+            f"and {p['far']:.3f} (CSI {p['csi']:.3f}); the 90th percentile rule {q['pod']:.3f} and {q['far']:.3f}")
+    beyond = max(v["csi"] for key, v in f["alerts"].items() if not key.startswith("D+1"))
+    in_card(f"no alert reaches a CSI above {beyond:.3f}")
+    cov = [f["quantiles"][f"D+{h} | test"]["calibrated_coverage"] for h in (1, 2, 3)]
+    in_card(f"covers {cov[0]:.3f}, {cov[1]:.3f} and {cov[2]:.3f} of the test days")
+    in_card(f"(-{abs(f['test_scores'][f'D+2 | {chosen}']['bias']):.3f} and -{abs(f['test_scores'][f'D+3 | {chosen}']['bias']):.3f} ug/m3)")
+    g = k["11"]
+    ets = g["backtest"]["ETS"]
+    in_card(f"ETS (MASE {ets['mase']:.3f}, 80% coverage {ets['coverage_80']:.3f})")
+    in_card(f"{g['annual_backtest']['ETS | 3']['bias']:.2f} ug/m3 too high on average three years ahead")
+    years = [g["outlook"][f"forecast: ETS | {y}"] for y in (2026, 2027, 2028)]
+    in_card("annual median " + ", ".join(f"{y['annual_median']:.2f}" for y in years[:2]) + f" and {years[2]['annual_median']:.2f} ug/m3")
+    in_card("chance of meeting 15 ug/m3 of " + ", ".join(f"{y['p_meets_15']:.2f}" for y in years[:2]) + f" and {years[2]['p_meets_15']:.2f}")
+    in_card("median Bad days " + ", ".join(f"{y['bad_days_median']:.0f}" for y in years[:2]) + f" and {years[2]['bad_days_median']:.0f} a year")
+    in_card(f"falls to {g['outlook']['scenario A: decline continues | 2028']['annual_median']:.2f} in 2028")
+    in_card(f"stays at {g['outlook']['scenario B: decline stalls | 2028']['annual_median']:.2f}")
+    in_card(f"({k['05']['mae']['ridge']:.2f} vs {k['05']['mae']['persistence']:.2f} ug/m3 for persistence)")
