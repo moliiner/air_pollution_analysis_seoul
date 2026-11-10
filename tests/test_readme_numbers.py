@@ -13,7 +13,7 @@ README = (config.ROOT / "README.md").read_text(encoding="utf-8")
 
 @pytest.fixture(scope="module")
 def k():
-    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05", "07", "08", "09", "10"]}
+    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05", "07", "08", "09", "10", "11"]}
 
 
 def quoted(text):
@@ -153,3 +153,17 @@ def test_multiday_forecast(k):
            f"{persistence['pod']:.3f} and {persistence['far']:.3f} for persistence")
     quoted(f"a calibrated 80% interval covers {f['quantiles']['D+1 | test']['calibrated_coverage']:.3f} of the test days")
     quoted(f"내일(D+1) 예보의 MAE를 지속성 기준보다 {skill['skill_pct']:.1f}% 줄였습니다")
+
+
+def test_long_term_outlook(k):
+    f = k["11"]
+    assert f["chosen_model"] == "ETS" and f["chosen_among_eligible"]
+    ets = f["backtest"]["ETS"]
+    quoted(f"chose ETS (MASE {ets['mase']:.3f}, 80% interval coverage {ets['coverage_80']:.3f})")
+    quoted(f"did not do better ({f['backtest']['deweathered (ML)']['mase']:.3f})")
+    y2026, y2028 = f["outlook"]["forecast: ETS | 2026"], f["outlook"]["forecast: ETS | 2028"]
+    quoted(f"(median {y2028['annual_median']:.2f} in 2028, 80% interval {y2028['annual_low_80']:.1f}-{y2028['annual_high_80']:.2f})")
+    quoted(f"is {y2026['p_meets_15']:.2f} in 2026 and {y2028['p_meets_15']:.2f} in 2028")
+    continues = max(f["outlook"][f"scenario A: decline continues | {y}"]["p_meets_15"] for y in (2026, 2027, 2028))
+    quoted(f"it stays at most {continues:.2f}")
+    quoted(f"2026년 {y2026['p_meets_15']:.2f}, 2028년 {y2028['p_meets_15']:.2f}")

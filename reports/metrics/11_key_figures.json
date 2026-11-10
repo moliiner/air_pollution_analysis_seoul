@@ -1,0 +1,226 @@
+{
+  "annual_backtest": {
+    "ETS | 1": {
+      "bias": 0.16182495142780645,
+      "coverage_80": 0.8571428571428571,
+      "forecasts": 7.0,
+      "mae": 1.5720277475156215
+    },
+    "ETS | 2": {
+      "bias": 0.6555200891506777,
+      "coverage_80": 1.0,
+      "forecasts": 7.0,
+      "mae": 1.18996290384892
+    },
+    "ETS | 3": {
+      "bias": 1.7758937343905323,
+      "coverage_80": 1.0,
+      "forecasts": 6.0,
+      "mae": 1.8440872986457038
+    },
+    "SARIMA | 1": {
+      "bias": 0.8791828096465615,
+      "coverage_80": 0.8571428571428571,
+      "forecasts": 7.0,
+      "mae": 1.814943187782087
+    },
+    "SARIMA | 2": {
+      "bias": 1.0546889781800266,
+      "coverage_80": 0.7142857142857143,
+      "forecasts": 7.0,
+      "mae": 1.5759405639422386
+    },
+    "SARIMA | 3": {
+      "bias": 2.104566529584543,
+      "coverage_80": 0.6666666666666666,
+      "forecasts": 6.0,
+      "mae": 2.7047158108217637
+    },
+    "damped trend | 1": {
+      "bias": 0.4393538317119443,
+      "coverage_80": 0.7142857142857143,
+      "forecasts": 7.0,
+      "mae": 1.719200276448541
+    },
+    "damped trend | 2": {
+      "bias": 0.9721959258005377,
+      "coverage_80": 0.8571428571428571,
+      "forecasts": 7.0,
+      "mae": 1.2840165791148412
+    },
+    "damped trend | 3": {
+      "bias": 2.145990614470391,
+      "coverage_80": 0.8333333333333334,
+      "forecasts": 6.0,
+      "mae": 2.1539307406552495
+    },
+    "deweathered (ML) | 1": {
+      "bias": 1.560684253141021,
+      "coverage_80": 0.5714285714285714,
+      "forecasts": 7.0,
+      "mae": 2.3050577065745936
+    },
+    "deweathered (ML) | 2": {
+      "bias": 1.9519268574862514,
+      "coverage_80": 0.8571428571428571,
+      "forecasts": 7.0,
+      "mae": 2.03947596358103
+    },
+    "deweathered (ML) | 3": {
+      "bias": 3.306312990795517,
+      "coverage_80": 0.8333333333333334,
+      "forecasts": 6.0,
+      "mae": 3.306312990795517
+    },
+    "seasonal mean | 1": {
+      "bias": 1.85443760420368,
+      "coverage_80": 0.2857142857142857,
+      "forecasts": 7.0,
+      "mae": 1.8924106385879749
+    },
+    "seasonal mean | 2": {
+      "bias": 2.4864198079841153,
+      "coverage_80": 0.2857142857142857,
+      "forecasts": 7.0,
+      "mae": 2.487477506544522
+    },
+    "seasonal mean | 3": {
+      "bias": 3.8120851854413256,
+      "coverage_80": 0.0,
+      "forecasts": 6.0,
+      "mae": 3.8120851854413256
+    }
+  },
+  "backtest": {
+    "ETS": {
+      "coverage_80": 0.8354700854700855,
+      "coverage_95": 0.9358974358974359,
+      "mase": 0.6629265357487502
+    },
+    "SARIMA": {
+      "coverage_80": 0.844017094017094,
+      "coverage_95": 0.9508547008547008,
+      "mase": 0.6997862593293135
+    },
+    "damped trend": {
+      "coverage_80": 0.7884615384615384,
+      "coverage_95": 0.9102564102564102,
+      "mase": 0.6709522490268093
+    },
+    "deweathered (ML)": {
+      "coverage_80": 0.8098290598290598,
+      "coverage_95": 0.9038461538461539,
+      "mase": 0.7095387911863587
+    },
+    "seasonal mean": {
+      "coverage_80": 0.5555555555555556,
+      "coverage_95": 0.8162393162393162,
+      "mase": 0.8051446676708399
+    }
+  },
+  "bad_days_check_inside_80": 9,
+  "chosen_among_eligible": true,
+  "chosen_model": "ETS",
+  "normalised_slope_pct_per_year": -3.6786416525651178,
+  "origins": [
+    "2018-01",
+    "2018-07",
+    "2019-01",
+    "2019-07",
+    "2020-01",
+    "2020-07",
+    "2021-01",
+    "2021-07",
+    "2022-01",
+    "2022-07",
+    "2023-01",
+    "2023-07",
+    "2024-01",
+    "2024-07"
+  ],
+  "outlook": {
+    "forecast: ETS | 2026": {
+      "annual_high_80": 19.53535555719202,
+      "annual_low_80": 15.597130446342305,
+      "annual_median": 17.430735331774223,
+      "bad_days_high_80": 36.0,
+      "bad_days_low_80": 14.0,
+      "bad_days_median": 24.0,
+      "p_meets_15": 0.08725
+    },
+    "forecast: ETS | 2027": {
+      "annual_high_80": 20.298150166742637,
+      "annual_low_80": 14.998097220117247,
+      "annual_median": 17.456012414091695,
+      "bad_days_high_80": 40.0,
+      "bad_days_low_80": 12.0,
+      "bad_days_median": 23.0,
+      "p_meets_15": 0.16125
+    },
+    "forecast: ETS | 2028": {
+      "annual_high_80": 21.014132943923176,
+      "annual_low_80": 14.501651631263035,
+      "annual_median": 17.46175484076003,
+      "bad_days_high_80": 44.0,
+      "bad_days_low_80": 10.0,
+      "bad_days_median": 24.0,
+      "p_meets_15": 0.2065
+    },
+    "scenario A: decline continues | 2026": {
+      "annual_high_80": 18.889660789047824,
+      "annual_low_80": 17.714761988663774,
+      "annual_median": 18.148532602224876,
+      "bad_days_high_80": 36.0,
+      "bad_days_low_80": 22.0,
+      "bad_days_median": 29.0,
+      "p_meets_15": 0.0
+    },
+    "scenario A: decline continues | 2027": {
+      "annual_high_80": 18.266568510540726,
+      "annual_low_80": 16.96167698249735,
+      "annual_median": 17.459088203722,
+      "bad_days_high_80": 33.0,
+      "bad_days_low_80": 19.0,
+      "bad_days_median": 26.0,
+      "p_meets_15": 0.0
+    },
+    "scenario A: decline continues | 2028": {
+      "annual_high_80": 17.69409232694973,
+      "annual_low_80": 16.248451679932224,
+      "annual_median": 16.841958123422536,
+      "bad_days_high_80": 30.0,
+      "bad_days_low_80": 16.0,
+      "bad_days_median": 23.0,
+      "p_meets_15": 0.013
+    },
+    "scenario B: decline stalls | 2026": {
+      "annual_high_80": 19.193912476538518,
+      "annual_low_80": 18.085937621643794,
+      "annual_median": 18.482281421894875,
+      "bad_days_high_80": 38.0,
+      "bad_days_low_80": 23.0,
+      "bad_days_median": 31.0,
+      "p_meets_15": 0.0
+    },
+    "scenario B: decline stalls | 2027": {
+      "annual_high_80": 19.193912476538518,
+      "annual_low_80": 18.085937621643794,
+      "annual_median": 18.482281421894875,
+      "bad_days_high_80": 38.0,
+      "bad_days_low_80": 24.0,
+      "bad_days_median": 31.0,
+      "p_meets_15": 0.0
+    },
+    "scenario B: decline stalls | 2028": {
+      "annual_high_80": 19.225699518438102,
+      "annual_low_80": 18.111870185247,
+      "annual_median": 18.488946247338642,
+      "bad_days_high_80": 38.0,
+      "bad_days_low_80": 24.0,
+      "bad_days_median": 30.0,
+      "p_meets_15": 0.0
+    }
+  },
+  "seasonal_naive_mase": 0.8392237830053766,
+  "selection_rule": "1. Eligible: pooled coverage of the 80% interval over all origins and horizons between 0.70 and 0.90. 2. Among eligible models, the lowest mean MASE over all origins and horizons 1-36 months. 3. A model within 5% of that MASE that is simpler (order: seasonal mean, ETS, damped trend, SARIMA, deweathered (ML)) is preferred. 4. If no model is eligible, rule 2 and 3 apply to all models and the coverage problem is reported."
+}

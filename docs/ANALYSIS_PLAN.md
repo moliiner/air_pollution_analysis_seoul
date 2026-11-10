@@ -117,6 +117,14 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [ ] Real-time inputs instead of their stand-ins (AirKorea and KMA APIs with a personal key)
 - [ ] CAMS or CMAQ forecasts at lead times, if an archive becomes available
 
+## Phase 11 - Outlook for 2026-2028 (`11`)
+
+- [x] Seasonal mean, ETS, damped trend, SARIMA and a model on the weather-normalised series, all as simulated paths
+- [x] Rolling origins every 6 months (2018-2024) up to 36 months; MASE and coverage of 80% / 95% intervals; annual means
+- [x] Selection rule fixed in advance (`longterm.SELECTION_RULE`)
+- [x] Forecast and two labelled scenarios; chance of meeting 15 ug/m3; expected Bad days (method checked on 2015-2025)
+- [ ] Re-score the 2026 forecast once the 2026 data are published
+
 ## What makes it stand out to recruiters in Korea
 
 - **A clear question with a local angle**: 미세먼지 (fine dust) is a daily topic in Korea; recruiters understand the problem immediately.
