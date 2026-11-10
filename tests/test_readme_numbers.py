@@ -13,7 +13,7 @@ README = (config.ROOT / "README.md").read_text(encoding="utf-8")
 
 @pytest.fixture(scope="module")
 def k():
-    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05", "07", "08"]}
+    return {nb: load_key_figures(nb) for nb in ["01", "02", "03", "04", "05", "07", "08", "09", "10"]}
 
 
 def quoted(text):
@@ -112,3 +112,44 @@ def test_weather(k):
     rho = f["spearman_all_days"]
     quoted(f"strongest for the boundary layer height (Spearman {rho['boundary_layer_height_mean_m']:.2f}) "
            f"and wind speed ({rho['wind_speed_mean_ms']:.2f})")
+
+
+def test_weather_normalisation_and_policy(k):
+    f = k["09"]
+    loyo = f["validation"][f"{f['chosen_settings']} | leave one year out"]
+    base = f["validation"]["date only | leave one year out"]
+    quoted(f"explains daily PM2.5 with R2 {loyo['r2']:.3f} ({base['r2']:.3f} with the date alone)")
+    norm = f["trend"]["weather-normalised"]
+    quoted(f"the trend is {norm['pct_per_year']:.2f}% per year (95% interval {norm['pct_low_95']:.2f}% "
+           f"to {norm['pct_high_95']:.2f}%)")
+    main = f["comparisons"]["normalised | all seasons"]
+    quoted(f"is {abs(main['A before-after (ug/m3)']):.2f} ug/m3 lower than in the four before")
+    quoted(f"and {abs(main['B gap from trend (ug/m3)']):.2f} ug/m3 below the earlier trend "
+           f"(interval {main['B low 95']:.2f} to {main['B high 95']:.2f})")
+    assert main["B high 95"] < 0
+    quoted(f"(difference in differences {main['C diff-in-diff (ug/m3)']:.2f} ug/m3, p = {main['C p-value']:.3f})")
+    covid = f["comparisons"]["normalised | without 2019-2020"]
+    assert covid["B low 95"] < 0 < covid["B high 95"]  # "loses its significance without the COVID-19 seasons"
+    regional = f["regional_trends"]
+    quoted(f"({regional['seoul']['pct_per_year']:.2f}% against {regional['baengnyeong']['pct_per_year']:.2f}% a year)")
+    quoted(f"이전보다 {abs(main['A before-after (ug/m3)']):.2f}㎍/㎥ 낮았지만")
+
+
+def test_multiday_forecast(k):
+    f = k["10"]
+    assert {row["model"] for row in f["chosen"]} == {"ridge, alpha 10"}  # the README names the model
+    chosen = "chosen: ridge, alpha 10, + Baengnyeong + JMA forecast"
+    mae = [f["test_scores"][f"D+{h} | {chosen}"]["mae"] for h in (1, 2, 3)]
+    quoted(f"of {mae[0]:.3f}, {mae[1]:.3f} and {mae[2]:.3f} ug/m3 at D+1, D+2 and D+3")
+    skill = f["skill"]["D+1 | persistence"]
+    quoted(f"{skill['skill_pct']:.1f}% lower than persistence at D+1 (95% interval {skill['low_95_pct']:.1f}% "
+           f"to {skill['high_95_pct']:.1f}%)")
+    quoted(f"and {f['skill']['D+1 | climatology']['skill_pct']:.1f}% lower than climatology")
+    quoted(f"Without the weather forecast the D+1 MAE is {f['test_scores']['D+1 | same model, + Baengnyeong']['mae']:.3f}")
+    assert all(row["skill_pct"] < 0 for row in f["cams"].values())  # "CAMS makes it worse"
+    alert = f["alerts"][f"D+1 | classifier (p >= {f['classifier_thresholds']['1']:.2f})"]
+    persistence = f["alerts"]["D+1 | persistence (grade rule)"]
+    quoted(f"a classifier has a POD of {alert['pod']:.3f} and a FAR of {alert['far']:.3f}, against "
+           f"{persistence['pod']:.3f} and {persistence['far']:.3f} for persistence")
+    quoted(f"a calibrated 80% interval covers {f['quantiles']['D+1 | test']['calibrated_coverage']:.3f} of the test days")
+    quoted(f"내일(D+1) 예보의 MAE를 지속성 기준보다 {skill['skill_pct']:.1f}% 줄였습니다")

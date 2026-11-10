@@ -117,11 +117,15 @@ The official KMA station data (data.kma.go.kr, KMA API Hub, data.go.kr) needs a 
 | `weather_daily_2015_2025.parquet` | KST day |
 | `air_weather_daily_2015_2025.parquet` | station-day of `air_daily_2015_2025` with the weather of the same day |
 
-## Population, stations by network, CAI (notebooks 02-04)
+## Population, stations by network, CAI, regional background (notebooks 02-04, 09)
 
 | Data | Source | Notes |
 |---|---|---|
 | District population, end of each year 2015-2025 | Ministry of the Interior and Safety, resident registration statistics ([jumin.mois.go.kr](https://jumin.mois.go.kr/statMonth.do)), downloaded by `seoul_air.population.download_population()` into `data/raw/population/` | Monthly CSV of every Korean district (CP949); December is used. The loader checks that the 25 districts add up to the Seoul total. Registered residents (거주자, 거주불명자, 재외국민), not foreigners. |
 | `reference/seoul_stations_by_network_2024.csv` | AirKorea final data 2024, made by `tools/seoul_networks_2024.py` | Annual means of the 40 Seoul stations: 25 urban (도시대기, the project's stations) and 15 roadside (도로변대기). |
+| `reference/baengnyeong_seoul_monthly_2018_2024.csv` | AirKorea final data 2018-2024, made by `tools/regional_background.py` | Monthly PM2.5 of the national background station of Baengnyeong Island (백령도, code 831492, 국가배경농도) and of the mean of the 25 Seoul urban stations; a month needs 75% of its hours. Only monthly means are stored: the final data is under KOGL Type 3 (no derivative works), so hourly values are not redistributed. Used in notebook 09. |
+| AirKorea final data 2015-2025, background stations | [AirKorea, 최종확정자료 다운로드](https://www.airkorea.or.kr/web/last_amb_hour_data?pMENU_NO=123), one zip per year with quarterly workbooks, downloaded by `seoul_air.regional.load_background()` | Only the national background network (국가배경농도, including Baengnyeong 831492) is kept, in `external/airkorea_background/` (not committed). Labels are end-of-hour (01-24), moved to the start of the hour; -999 is invalid. The 2025 file is marked provisional on the website. Used in notebook 10. |
+| JMA forecasts 2018-2025 | [Open-Meteo Previous Runs API](https://open-meteo.com/en/docs/previous-runs-api), model `jma_seamless`, downloaded by `seoul_air.nwp.download()` into `raw/weather/` | Hourly forecasts at Seoul made 2, 3 and 4 days before each hour; the archive of other models starts in 2024 (GFS temperature in 2021); no boundary layer height. CC BY 4.0. |
+| CAMS 2022-2025 | [Open-Meteo Air Quality API](https://open-meteo.com/en/docs/air-quality-api), downloaded by `seoul_air.regional.download_cams()` into `raw/cams/` | PM2.5, PM10 and dust at five points (Seoul, Baengnyeong, Shandong, Beijing-Tianjin, Liaoning), from August 2022; forecasts at longer lead times are not archived. |
 | CAI breakpoints and rules | [Seoul Metropolitan Government](https://cleanair.seoul.go.kr/information/info3), [AirKorea](https://www.airkorea.or.kr/eng/khaiInfo?pMENU_NO=166) | Implemented in `seoul_air.cai`; the O3 scale ends at 0.6 ppm (the Kaggle item file shows 0.5). |
 

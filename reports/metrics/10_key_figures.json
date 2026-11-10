@@ -1,0 +1,468 @@
+{
+  "alerts": {
+    "D+1 | 90th percentile above 35": {
+      "alerts": 225.0,
+      "bad_days": 122.0,
+      "csi": 0.376984126984127,
+      "f1": 0.5475504322766571,
+      "far": 0.5777777777777777,
+      "pod": 0.7786885245901639
+    },
+    "D+1 | classifier (p >= 0.50)": {
+      "alerts": 98.0,
+      "bad_days": 122.0,
+      "csi": 0.4012738853503185,
+      "f1": 0.5727272727272728,
+      "far": 0.35714285714285715,
+      "pod": 0.5163934426229508
+    },
+    "D+1 | persistence (grade rule)": {
+      "alerts": 123.0,
+      "bad_days": 122.0,
+      "csi": 0.21287128712871287,
+      "f1": 0.3510204081632653,
+      "far": 0.6504065040650406,
+      "pod": 0.3524590163934426
+    },
+    "D+1 | point forecast (grade rule)": {
+      "alerts": 75.0,
+      "bad_days": 122.0,
+      "csi": 0.3493150684931507,
+      "f1": 0.517766497461929,
+      "far": 0.32,
+      "pod": 0.4180327868852459
+    },
+    "D+2 | 90th percentile above 35": {
+      "alerts": 269.0,
+      "bad_days": 122.0,
+      "csi": 0.2694805194805195,
+      "f1": 0.42455242966751916,
+      "far": 0.6914498141263941,
+      "pod": 0.680327868852459
+    },
+    "D+2 | classifier (p >= 0.35)": {
+      "alerts": 127.0,
+      "bad_days": 122.0,
+      "csi": 0.27692307692307694,
+      "f1": 0.4337349397590362,
+      "far": 0.5748031496062992,
+      "pod": 0.4426229508196721
+    },
+    "D+2 | persistence (grade rule)": {
+      "alerts": 123.0,
+      "bad_days": 122.0,
+      "csi": 0.1036036036036036,
+      "f1": 0.18775510204081627,
+      "far": 0.8130081300813008,
+      "pod": 0.1885245901639344
+    },
+    "D+2 | point forecast (grade rule)": {
+      "alerts": 64.0,
+      "bad_days": 122.0,
+      "csi": 0.25675675675675674,
+      "f1": 0.40860215053763443,
+      "far": 0.40625,
+      "pod": 0.3114754098360656
+    },
+    "D+3 | 90th percentile above 35": {
+      "alerts": 281.0,
+      "bad_days": 122.0,
+      "csi": 0.2672955974842767,
+      "f1": 0.42183622828784123,
+      "far": 0.697508896797153,
+      "pod": 0.6967213114754098
+    },
+    "D+3 | classifier (p >= 0.18)": {
+      "alerts": 215.0,
+      "bad_days": 122.0,
+      "csi": 0.27169811320754716,
+      "f1": 0.427299703264095,
+      "far": 0.6651162790697674,
+      "pod": 0.5901639344262295
+    },
+    "D+3 | persistence (grade rule)": {
+      "alerts": 123.0,
+      "bad_days": 122.0,
+      "csi": 0.06521739130434782,
+      "f1": 0.12244897959183673,
+      "far": 0.8780487804878049,
+      "pod": 0.12295081967213115
+    },
+    "D+3 | point forecast (grade rule)": {
+      "alerts": 52.0,
+      "bad_days": 122.0,
+      "csi": 0.2,
+      "f1": 0.3333333333333333,
+      "far": 0.4423076923076923,
+      "pod": 0.23770491803278687
+    }
+  },
+  "cams": {
+    "1": {
+      "days": 1095,
+      "high_95_pct": -0.9333930588368514,
+      "low_95_pct": -6.369517100382415,
+      "mae_with_cams": 5.277527950197844,
+      "mae_without": 5.096139955721718,
+      "skill_pct": -3.5593212912544026
+    },
+    "2": {
+      "days": 1094,
+      "high_95_pct": -1.9701785915146874,
+      "low_95_pct": -6.93947402999881,
+      "mae_with_cams": 6.317543035953855,
+      "mae_without": 6.046782516491491,
+      "skill_pct": -4.477761829930449
+    },
+    "3": {
+      "days": 1093,
+      "high_95_pct": -3.1802904917264425,
+      "low_95_pct": -8.175384727244998,
+      "mae_with_cams": 6.612628170756681,
+      "mae_without": 6.259541338706526,
+      "skill_pct": -5.640778021015769
+    }
+  },
+  "chosen": [
+    {
+      "horizon": 1,
+      "inputs": "+ Baengnyeong + JMA forecast",
+      "mae": 5.119325187303202,
+      "model": "ridge, alpha 10"
+    },
+    {
+      "horizon": 2,
+      "inputs": "+ Baengnyeong + JMA forecast",
+      "mae": 6.563993860725093,
+      "model": "ridge, alpha 10"
+    },
+    {
+      "horizon": 3,
+      "inputs": "+ Baengnyeong + JMA forecast",
+      "mae": 6.885182748975878,
+      "model": "ridge, alpha 10"
+    }
+  ],
+  "classifier_thresholds": {
+    "1": 0.5,
+    "2": 0.35,
+    "3": 0.18
+  },
+  "literature_ours": {
+    "This notebook: D+1 2018-2020, without JMA inputs (each year fit on earlier years)": {
+      "accuracy_pct": 66.78832116788321,
+      "days": 1096,
+      "far_pct": 23.25581395348837,
+      "rmse": 10.049561691843532
+    },
+    "This notebook: D+1, target days Jan-Mar 2021 (validation year)": {
+      "accuracy_pct": 64.04494382022472,
+      "days": 89,
+      "far_pct": 25.0,
+      "rmse": 9.987752018107951
+    },
+    "This notebook: D+2, target days Jan-Mar 2021 (validation year)": {
+      "accuracy_pct": 60.22727272727273,
+      "days": 88,
+      "far_pct": 34.61538461538461,
+      "rmse": 12.57554529599483
+    }
+  },
+  "quantiles": {
+    "D+1 | test": {
+      "calibrated_coverage": 0.85,
+      "calibrated_width": 18.524348120836564,
+      "climatology_coverage": 0.7835616438356164,
+      "coverage": 0.6643835616438356,
+      "mean_width": 13.643466940652488,
+      "nominal": 0.8,
+      "pinball_skill_q10_pct": 17.096064952363665,
+      "pinball_skill_q50_pct": 35.52953960681698,
+      "pinball_skill_q90_pct": 36.292776825013426
+    },
+    "D+1 | validation": {
+      "calibrated_coverage": 0.8030095759233926,
+      "calibrated_width": 19.509987323494425,
+      "climatology_coverage": 0.7222982216142271,
+      "coverage": 0.6032831737346102,
+      "mean_width": 14.629106143310345,
+      "nominal": 0.8,
+      "pinball_skill_q10_pct": 25.649507068019382,
+      "pinball_skill_q50_pct": 37.75994070462414,
+      "pinball_skill_q90_pct": 41.35967596822084
+    },
+    "D+2 | test": {
+      "calibrated_coverage": 0.860178204249486,
+      "calibrated_width": 22.459112209060756,
+      "climatology_coverage": 0.7840986977381769,
+      "coverage": 0.6819739547635366,
+      "mean_width": 16.59270111684824,
+      "nominal": 0.8,
+      "pinball_skill_q10_pct": 13.130831906348472,
+      "pinball_skill_q50_pct": 22.399068453859826,
+      "pinball_skill_q90_pct": 22.747720706997853
+    },
+    "D+2 | validation": {
+      "calibrated_coverage": 0.8030095759233926,
+      "calibrated_width": 23.289383203020915,
+      "climatology_coverage": 0.7222982216142271,
+      "coverage": 0.5841313269493844,
+      "mean_width": 17.422972110808395,
+      "nominal": 0.8,
+      "pinball_skill_q10_pct": 6.669114250134733,
+      "pinball_skill_q50_pct": 22.847792551730773,
+      "pinball_skill_q90_pct": 24.92984275705443
+    },
+    "D+3 | test": {
+      "calibrated_coverage": 0.8593964334705075,
+      "calibrated_width": 23.84787508958679,
+      "climatology_coverage": 0.7839506172839507,
+      "coverage": 0.6838134430727023,
+      "mean_width": 17.75647741878121,
+      "nominal": 0.8,
+      "pinball_skill_q10_pct": 10.368874998106747,
+      "pinball_skill_q50_pct": 19.42547613246991,
+      "pinball_skill_q90_pct": 19.251115805832132
+    },
+    "D+3 | validation": {
+      "calibrated_coverage": 0.8030095759233926,
+      "calibrated_width": 24.737769118192304,
+      "climatology_coverage": 0.7209302325581395,
+      "coverage": 0.5978112175102599,
+      "mean_width": 18.646371447386716,
+      "nominal": 0.8,
+      "pinball_skill_q10_pct": 5.4863259822018335,
+      "pinball_skill_q50_pct": 18.67745796708644,
+      "pinball_skill_q90_pct": 15.971096120746386
+    }
+  },
+  "skill": {
+    "D+1 | climatology": {
+      "high_95_pct": 47.316477800987556,
+      "low_95_pct": 40.3504645282943,
+      "skill_pct": 43.96470338823172
+    },
+    "D+1 | persistence": {
+      "high_95_pct": 42.98900655820604,
+      "low_95_pct": 36.624068270075654,
+      "skill_pct": 40.00408568364239
+    },
+    "D+2 | climatology": {
+      "high_95_pct": 37.915334957071096,
+      "low_95_pct": 29.40916699898839,
+      "skill_pct": 33.754156265343696
+    },
+    "D+2 | persistence": {
+      "high_95_pct": 46.31468411502353,
+      "low_95_pct": 39.74026953033903,
+      "skill_pct": 43.108450672655096
+    },
+    "D+3 | climatology": {
+      "high_95_pct": 35.60027509155177,
+      "low_95_pct": 27.58769062782211,
+      "skill_pct": 31.566173764582462
+    },
+    "D+3 | persistence": {
+      "high_95_pct": 47.10879122787428,
+      "low_95_pct": 40.63159196374631,
+      "skill_pct": 43.894043126167126
+    }
+  },
+  "test_scores": {
+    "D+1 | chosen: ridge, alpha 10, + Baengnyeong + JMA forecast": {
+      "alerts": 75.0,
+      "bad_days": 122.0,
+      "bias": 0.07728709646172816,
+      "csi": 0.3493150684931507,
+      "days": 1460.0,
+      "f1": 0.517766497461929,
+      "far": 0.32,
+      "grade_accuracy": 0.7335616438356164,
+      "mae": 5.07784619828637,
+      "pod": 0.4180327868852459,
+      "rmse": 7.366042246482265
+    },
+    "D+1 | climatology": {
+      "alerts": 0.0,
+      "bad_days": 122.0,
+      "bias": 3.909656216572888,
+      "csi": 0.0,
+      "days": 1460.0,
+      "f1": NaN,
+      "far": NaN,
+      "grade_accuracy": 0.5178082191780822,
+      "mae": 9.061870830215152,
+      "pod": 0.0,
+      "rmse": 11.40884139325397
+    },
+    "D+1 | persistence": {
+      "alerts": 123.0,
+      "bad_days": 122.0,
+      "bias": 0.001304822162354082,
+      "csi": 0.21287128712871287,
+      "days": 1460.0,
+      "f1": 0.3510204081632653,
+      "far": 0.6504065040650406,
+      "grade_accuracy": 0.5753424657534246,
+      "mae": 8.463653327309853,
+      "pod": 0.3524590163934426,
+      "rmse": 11.86745383521833
+    },
+    "D+1 | same model, + Baengnyeong": {
+      "alerts": 48.0,
+      "bad_days": 122.0,
+      "bias": -0.43852856139435437,
+      "csi": 0.22302158273381295,
+      "days": 1460.0,
+      "f1": 0.3647058823529412,
+      "far": 0.3541666666666667,
+      "grade_accuracy": 0.6787671232876712,
+      "mae": 6.035870797194956,
+      "pod": 0.2540983606557377,
+      "rmse": 8.497511803426333
+    },
+    "D+1 | same model, pollution + observed weather": {
+      "alerts": 45.0,
+      "bad_days": 122.0,
+      "bias": -0.3207149688185955,
+      "csi": 0.21014492753623187,
+      "days": 1460.0,
+      "f1": 0.34730538922155685,
+      "far": 0.35555555555555557,
+      "grade_accuracy": 0.678082191780822,
+      "mae": 6.140826211533929,
+      "pod": 0.23770491803278687,
+      "rmse": 8.67705384220688
+    },
+    "D+2 | chosen: ridge, alpha 10, + Baengnyeong + JMA forecast": {
+      "alerts": 64.0,
+      "bad_days": 122.0,
+      "bias": -0.6824361582514341,
+      "csi": 0.25675675675675674,
+      "days": 1459.0,
+      "f1": 0.40860215053763443,
+      "far": 0.40625,
+      "grade_accuracy": 0.6662097326936258,
+      "mae": 6.0040356399396115,
+      "pod": 0.3114754098360656,
+      "rmse": 8.522485692694863
+    },
+    "D+2 | climatology": {
+      "alerts": 0.0,
+      "bad_days": 122.0,
+      "bias": 3.90831070067441,
+      "csi": 0.0,
+      "days": 1459.0,
+      "f1": NaN,
+      "far": NaN,
+      "grade_accuracy": 0.5174777244688142,
+      "mae": 9.063263899224244,
+      "pod": 0.0,
+      "rmse": 11.411728683306917
+    },
+    "D+2 | persistence": {
+      "alerts": 123.0,
+      "bad_days": 122.0,
+      "bias": 0.0006378531151111389,
+      "csi": 0.1036036036036036,
+      "days": 1459.0,
+      "f1": 0.18775510204081627,
+      "far": 0.8130081300813008,
+      "grade_accuracy": 0.4962302947224126,
+      "mae": 10.553475359571152,
+      "pod": 0.1885245901639344,
+      "rmse": 14.397679251341245
+    },
+    "D+2 | same model, + Baengnyeong": {
+      "alerts": 4.0,
+      "bad_days": 122.0,
+      "bias": -0.7803945058205015,
+      "csi": 0.008,
+      "days": 1459.0,
+      "f1": 0.015873015873015872,
+      "far": 0.75,
+      "grade_accuracy": 0.5873886223440713,
+      "mae": 7.5797482359279345,
+      "pod": 0.00819672131147541,
+      "rmse": 10.43207684214312
+    },
+    "D+2 | same model, pollution + observed weather": {
+      "alerts": 2.0,
+      "bad_days": 122.0,
+      "bias": -0.6710476726621627,
+      "csi": 0.008130081300813009,
+      "days": 1459.0,
+      "f1": 0.016129032258064516,
+      "far": 0.5,
+      "grade_accuracy": 0.5915010281014393,
+      "mae": 7.592035418324664,
+      "pod": 0.00819672131147541,
+      "rmse": 10.445243252644941
+    },
+    "D+3 | chosen: ridge, alpha 10, + Baengnyeong + JMA forecast": {
+      "alerts": 52.0,
+      "bad_days": 122.0,
+      "bias": -0.8787154849647881,
+      "csi": 0.2,
+      "days": 1458.0,
+      "f1": 0.3333333333333333,
+      "far": 0.4423076923076923,
+      "grade_accuracy": 0.6714677640603567,
+      "mae": 6.19980719768063,
+      "pod": 0.23770491803278687,
+      "rmse": 8.845264963864349
+    },
+    "D+3 | climatology": {
+      "alerts": 0.0,
+      "bad_days": 122.0,
+      "bias": 3.903510963728533,
+      "csi": 0.0,
+      "days": 1458.0,
+      "f1": NaN,
+      "far": NaN,
+      "grade_accuracy": 0.5178326474622771,
+      "mae": 9.059565333016488,
+      "pod": 0.0,
+      "rmse": 11.408806377672638
+    },
+    "D+3 | persistence": {
+      "alerts": 123.0,
+      "bad_days": 122.0,
+      "bias": -0.012689200236459698,
+      "csi": 0.06521739130434782,
+      "days": 1458.0,
+      "f1": 0.12244897959183673,
+      "far": 0.8780487804878049,
+      "grade_accuracy": 0.47050754458161864,
+      "mae": 11.050176386122992,
+      "pod": 0.12295081967213115,
+      "rmse": 15.1892786589314
+    },
+    "D+3 | same model, + Baengnyeong": {
+      "alerts": 1.0,
+      "bad_days": 122.0,
+      "bias": -1.0581461387924949,
+      "csi": 0.0,
+      "days": 1458.0,
+      "f1": NaN,
+      "far": 1.0,
+      "grade_accuracy": 0.5692729766803841,
+      "mae": 7.860312349340949,
+      "pod": 0.0,
+      "rmse": 10.789442449670807
+    },
+    "D+3 | same model, pollution + observed weather": {
+      "alerts": 1.0,
+      "bad_days": 122.0,
+      "bias": -0.9657438836541737,
+      "csi": 0.0,
+      "days": 1458.0,
+      "f1": NaN,
+      "far": 1.0,
+      "grade_accuracy": 0.5692729766803841,
+      "mae": 7.879384591041282,
+      "pod": 0.0,
+      "rmse": 10.78804733970475
+    }
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "chosen_settings": "small",
+  "comparisons": {
+    "normalised | all seasons": {
+      "A before-after (ug/m3)": -5.498006805337425,
+      "A p-value": 0.004761904761904762,
+      "B gap from trend (ug/m3)": -2.701317939334646,
+      "B high 95": -0.4429066721122663,
+      "B low 95": -5.205150975999311,
+      "B pre-period months": 59.0,
+      "B pre-period slope (ug/m3/yr)": -0.5593377732005559,
+      "C diff-in-diff (% relative)": 5.185696285067443,
+      "C diff-in-diff (ug/m3)": -0.8911865244971278,
+      "C log p-value": 0.38571428571428573,
+      "C p-value": 0.40476190476190477
+    },
+    "normalised | without 2019-2020": {
+      "A before-after (ug/m3)": -5.927674622764123,
+      "A p-value": 0.02857142857142857,
+      "B gap from trend (ug/m3)": -2.571647983560787,
+      "B high 95": 0.1384455371060689,
+      "B low 95": -5.576247627558386,
+      "B pre-period months": 59.0,
+      "B pre-period slope (ug/m3/yr)": -0.5593377732005559,
+      "C diff-in-diff (% relative)": 5.797282986802754,
+      "C diff-in-diff (ug/m3)": -0.9505830420697272,
+      "C log p-value": 0.45714285714285713,
+      "C p-value": 0.5142857142857142
+    },
+    "observed | all seasons": {
+      "A before-after (ug/m3)": -6.434746220378017,
+      "A p-value": 0.004761904761904762,
+      "B gap from trend (ug/m3)": -5.339184818880221,
+      "B high 95": -1.1286323062748223,
+      "B low 95": -9.337031984660292,
+      "B pre-period months": 59.0,
+      "B pre-period slope (ug/m3/yr)": -0.2191122802995592,
+      "C diff-in-diff (% relative)": 3.29541798531785,
+      "C diff-in-diff (ug/m3)": -1.6007992147723122,
+      "C log p-value": 0.8238095238095238,
+      "C p-value": 0.5476190476190477
+    },
+    "observed | without 2019-2020": {
+      "A before-after (ug/m3)": -7.407529846080024,
+      "A p-value": 0.02857142857142857,
+      "B gap from trend (ug/m3)": -6.092856164282669,
+      "B high 95": -1.0401931491561904,
+      "B low 95": -10.890272763218753,
+      "B pre-period months": 59.0,
+      "B pre-period slope (ug/m3/yr)": -0.2191122802995592,
+      "C diff-in-diff (% relative)": 2.17381427152763,
+      "C diff-in-diff (ug/m3)": -2.128738174689728,
+      "C log p-value": 0.9428571428571428,
+      "C p-value": 0.5714285714285714
+    }
+  },
+  "member_slope_range": [
+    -0.7862499483074956,
+    -0.6073894456094615
+  ],
+  "placebo_other_months": {
+    "normalised": {
+      "before_after": -4.751009615209661,
+      "expected_change": -3.0763960371871235,
+      "gap": -1.6746135780225373,
+      "gap_high_95": 0.8096697318874091,
+      "gap_low_95": -4.428864193959921
+    },
+    "observed": {
+      "before_after": -4.756817042796218,
+      "expected_change": -1.205132539065803,
+      "gap": -3.551684503730415,
+      "gap_high_95": 1.0799808994580782,
+      "gap_low_95": -7.949371113633542
+    }
+  },
+  "regional_seasons": {
+    "2018": {
+      "baengnyeong": 27.82911931117501,
+      "seoul": 35.34016878250169,
+      "seoul / baengnyeong": 1.2698989280738955,
+      "seoul minus baengnyeong": 7.511049471326682
+    },
+    "2019": {
+      "baengnyeong": 23.29404131434409,
+      "seoul": 27.479421989301763,
+      "seoul / baengnyeong": 1.1796760217979172,
+      "seoul minus baengnyeong": 4.185380674957674
+    },
+    "2020": {
+      "baengnyeong": 26.346752857180753,
+      "seoul": 27.326493129529798,
+      "seoul / baengnyeong": 1.037186376539833,
+      "seoul minus baengnyeong": 0.9797402723490443
+    },
+    "2021": {
+      "baengnyeong": 19.167228513920577,
+      "seoul": 24.594844643958965,
+      "seoul / baengnyeong": 1.283171671172829,
+      "seoul minus baengnyeong": 5.427616130038388
+    },
+    "2022": {
+      "baengnyeong": 21.329930390911816,
+      "seoul": 26.466939225155908,
+      "seoul / baengnyeong": 1.2408357055132655,
+      "seoul minus baengnyeong": 5.137008834244092
+    },
+    "2023": {
+      "baengnyeong": 21.108686889147158,
+      "seoul": 22.36648535121622,
+      "seoul / baengnyeong": 1.0595867695927474,
+      "seoul minus baengnyeong": 1.2577984620690614
+    }
+  },
+  "regional_trends": {
+    "baengnyeong": {
+      "high_95": -0.06385692666773841,
+      "low_95": -0.7487417285000602,
+      "pct_per_year": -2.0707498449336468,
+      "slope_per_year": -0.3850589841337023
+    },
+    "seoul": {
+      "high_95": -0.5779107169454527,
+      "low_95": -1.1340207122722668,
+      "pct_per_year": -4.125574509680342,
+      "slope_per_year": -0.8467236098544826
+    }
+  },
+  "seasons": {
+    "2015": {
+      "normalised": 29.633635128786093,
+      "observed": 27.667941511758663
+    },
+    "2016": {
+      "normalised": 31.4321507668266,
+      "observed": 32.43931931067251
+    },
+    "2017": {
+      "normalised": 31.242660894926807,
+      "observed": 32.13795416909033
+    },
+    "2018": {
+      "normalised": 31.4657941568867,
+      "observed": 35.36559669299664
+    },
+    "2019": {
+      "normalised": 26.425942999125517,
+      "observed": 27.491014347409905
+    },
+    "2020": {
+      "normalised": 26.183835133619535,
+      "observed": 27.336033556901146
+    },
+    "2021": {
+      "normalised": 25.196584496765553,
+      "observed": 24.589080866436944
+    },
+    "2022": {
+      "normalised": 25.016301416338568,
+      "observed": 26.475173640070018
+    },
+    "2023": {
+      "normalised": 24.951836461296047,
+      "observed": 22.368595372780177
+    },
+    "2024": {
+      "normalised": 24.898820081969557,
+      "observed": 24.547842420910882
+    }
+  },
+  "trend": {
+    "observed": {
+      "high_95": -0.5413228118930132,
+      "low_95": -0.9748899440025527,
+      "pct_high_95": -2.5219886734412427,
+      "pct_low_95": -4.5419504639537225,
+      "pct_per_year": -3.532122311075062,
+      "slope_per_year": -0.758139162763273
+    },
+    "weather-normalised": {
+      "high_95": -0.5034697271611868,
+      "low_95": -0.8777888247523613,
+      "pct_high_95": -2.3478208486476304,
+      "pct_low_95": -4.093376011073844,
+      "pct_per_year": -3.242436801328683,
+      "slope_per_year": -0.6953123244657541
+    }
+  },
+  "validation": {
+    "date only | forward chaining": {
+      "bias": -0.7040182333122432,
+      "days": 2922.0,
+      "mae": 9.846540935096273,
+      "r2": -0.02189374272869915
+    },
+    "date only | leave one year out": {
+      "bias": 0.09286971662865814,
+      "days": 4018.0,
+      "mae": 9.466135853384943,
+      "r2": 0.06922483722054584
+    },
+    "default | forward chaining": {
+      "bias": 0.9959176337228691,
+      "days": 2922.0,
+      "mae": 6.892107024675279,
+      "r2": 0.4737801788047349
+    },
+    "default | leave one year out": {
+      "bias": 0.4225237499897207,
+      "days": 4018.0,
+      "mae": 6.621932114684225,
+      "r2": 0.49538436681418885
+    },
+    "large | forward chaining": {
+      "bias": 1.1373336505126201,
+      "days": 2922.0,
+      "mae": 7.003888247085237,
+      "r2": 0.46001128688851634
+    },
+    "large | leave one year out": {
+      "bias": 0.3936414487306714,
+      "days": 4018.0,
+      "mae": 6.640044348823048,
+      "r2": 0.4934554876399554
+    },
+    "small | forward chaining": {
+      "bias": 0.39222654853086397,
+      "days": 2922.0,
+      "mae": 6.482760980619182,
+      "r2": 0.5095308999076873
+    },
+    "small | leave one year out": {
+      "bias": 0.7386763763843238,
+      "days": 4018.0,
+      "mae": 6.767124262804417,
+      "r2": 0.4788616099947396
+    }
+  }
+}

@@ -97,8 +97,25 @@ Out of scope with this dataset: the effect of the PM seasonal management system 
 - [x] Korean CAI, including the pollutant that sets it
 - [x] Population-weighted exposure with the official district population
 - [x] Roadside stations identified and kept apart (2024 comparison)
-- [ ] Weather-adjusted trend and evaluation of the PM seasonal management system
-- [ ] Forecast on the 2015-2025 data (notebook 05 still uses the Kaggle data)
+- [x] Weather-adjusted trend and evaluation of the PM seasonal management system (notebook 09)
+- [x] Forecast on the 2015-2025 data (notebook 10; notebook 05 kept for the Kaggle data)
+
+## Phase 9 - Weather normalisation and the seasonal management system (`09`)
+
+- [x] Gradient boosting model of daily PM2.5 from weather and date, validated by leaving each year out and by forward chaining, against a date-only baseline
+- [x] Weather-normalised series (resampled weather of similar dates) with a bootstrap ensemble for model uncertainty
+- [x] Seasons before and after December 2019: before-after, gap from the earlier trend, difference in differences against April-November, without the COVID-19 seasons, placebo on April-November
+- [x] Regional context with Baengnyeong Island (AirKorea final data 2018-2024) and comparison with Lee et al. (2024) and Ryoo et al. (2024)
+- [ ] Regional background before 2018 (AirKorea final data of 2015-2017) to estimate the Seoul-background gap before the system
+
+## Phase 10 - Forecast 1-3 days ahead (`10`)
+
+- [x] Issue at 17:00 KST with inputs published before it (tested); targets D+1 to D+3
+- [x] Regional background (Baengnyeong, AirKorea final data 2015-2025) and CAMS (from August 2022)
+- [x] Archived JMA forecasts (Previous Runs API, from 2018); no archived KMA or chemical transport forecast
+- [x] Ridge and boosting, quantiles with conformal calibration, Bad-or-worse classifier; yearly origins, validation 2020-2021, test 2022-2025; persistence and climatology references; comparison with Lee et al. (2022)
+- [ ] Real-time inputs instead of their stand-ins (AirKorea and KMA APIs with a personal key)
+- [ ] CAMS or CMAQ forecasts at lead times, if an archive becomes available
 
 ## What makes it stand out to recruiters in Korea
 

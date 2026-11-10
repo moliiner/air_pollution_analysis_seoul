@@ -24,7 +24,15 @@ from seoul_air import sources  # noqa: E402
 
 PAGE = "https://www.data.go.kr/data/15122830/fileData.do"
 # One data.go.kr record per published year (detail key of the page, history number)
-VERSIONS = {2024: ("uddi:ce62937c-cd4f-46e6-92f3-e438ceb7d781", 2)}
+VERSIONS = {
+    2018: ("uddi:f23e96f5-3c69-4fa7-8c37-94037d3f199a", 6),
+    2019: ("uddi:2f3003b2-5cf5-4e0d-8b02-e3a917bf4dce", 6),
+    2020: ("uddi:e60a8f8a-382b-45a6-8562-b15f56e6b8dd", 4),
+    2021: ("uddi:71af9d09-40d8-40ca-ba6d-d1ffa421e34c", 3),
+    2022: ("uddi:81ce74b7-3665-4765-81ae-ba204f0d0c3f", 2),
+    2023: ("uddi:7b409515-6c01-49d4-b6fa-8fba0e963ee3", 3),
+    2024: ("uddi:ce62937c-cd4f-46e6-92f3-e438ceb7d781", 2),
+}
 POLLUTANTS = ["so2", "co", "o3", "no2", "pm10", "pm25"]
 
 
@@ -57,7 +65,13 @@ def seoul_rows(path, codes):
     workbook = CalamineWorkbook.from_path(str(path))
     for sheet in workbook.sheet_names:
         rows = workbook.get_sheet_by_name(sheet).to_python(skip_empty_area=False)
-        frame = pd.DataFrame(rows[1:], columns=["region", "network", "code", "name", "label", *POLLUTANTS, "address"])
+        # Some older workbooks have no network column (망): 11 columns instead of 12
+        columns = ["region", "network", "code", "name", "label", *POLLUTANTS, "address"]
+        if len(rows[0]) == len(columns) - 1:
+            columns.remove("network")
+        elif len(rows[0]) != len(columns):
+            raise ValueError(f"unexpected header in sheet {sheet}: {rows[0]}")
+        frame = pd.DataFrame(rows[1:], columns=columns)
         frame["code"] = frame["code"].astype(str).str.replace(r"\.0$", "", regex=True)
         frames.append(frame[frame["code"].isin(codes)])
     out = pd.concat(frames, ignore_index=True)
